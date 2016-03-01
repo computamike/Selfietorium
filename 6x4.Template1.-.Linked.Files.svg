@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="540"
+   height="360"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="6x4 Template1 - Linked Files.svg">
+  <defs
+     id="defs4">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3043">
+      <rect
+         style="opacity:0.72200006;fill:#ff00ff;fill-opacity:1;stroke:none"
+         id="rect3045"
+         width="307.25461"
+         height="204.28571"
+         x="657.85718"
+         y="559.50262" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3058">
+      <rect
+         style="opacity:0.72200006;fill:#ff00ff;fill-opacity:1;stroke:none"
+         id="rect3060"
+         width="162"
+         height="108"
+         x="15.000022"
+         y="926.50262" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3073">
+      <rect
+         y="926.50262"
+         x="190"
+         height="108"
+         width="162"
+         id="rect3075"
+         style="opacity:0.72200006;fill:#ff00ff;fill-opacity:1;stroke:none" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3088">
+      <rect
+         style="opacity:0.72200006;fill:#ff00ff;fill-opacity:1;stroke:none"
+         id="rect3090"
+         width="162"
+         height="108"
+         x="362.97"
+         y="926.50262" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="332.95087"
+     inkscape:cy="221.13374"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="in"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-692.35975)">
+    <image
+       y="926.50262"
+       x="2.9563904e-005"
+       id="image3055"
+       xlink:href="file:///C:/Projects/Selfitorium/Photo2.jpg"
+       height="108"
+       width="191.99998"
+       clip-path="url(#clipPath3058)">
+      <desc
+         id="desc3106">Come one... you can do better than that...</desc>
+    </image>
+    <rect
+       y="709.50262"
+       x="15.000022"
+       height="204.28571"
+       width="307.25461"
+       id="rect3012"
+       style="opacity:0.72200006;fill:#ff00ff;fill-opacity:1;stroke:none" />
+    <image
+       y="926.50262"
+       x="175"
+       id="image3070"
+       xlink:href="file:///C:/Projects/Selfitorium/Photo3.jpg"
+       height="108"
+       width="192"
+       clip-path="url(#clipPath3073)">
+      <desc
+         id="desc3108">That's better... One more - Big smiles everyone</desc>
+    </image>
+    <image
+       y="926.50262"
+       x="347.97"
+       id="image3085"
+       xlink:href="file:///C:/Projects/Selfitorium/Photo4.jpg"
+       height="108"
+       width="192"
+       clip-path="url(#clipPath3088)">
+      <title
+         id="title3110">Last one was brilliant - sure you can't do better ?  Last photo</title>
+    </image>
+    <image
+       y="559.5025"
+       x="629.89691"
+       id="image3038"
+       xlink:href="file:///C:/Projects/Selfitorium/Photo1.jpg"
+       height="204.286"
+       width="363.17511"
+       clip-path="url(#clipPath3043)"
+       transform="translate(-642.85716,150)">
+      <desc
+         id="desc3104">Ok - get ready everyone..</desc>
+    </image>
+    <rect
+       style="opacity:0.72200006;fill:#ff0000;fill-opacity:1;stroke:none"
+       id="rect3092"
+       width="39.999996"
+       height="42.578125"
+       x="7.8571429"
+       y="698.78833" />
+    <rect
+       style="opacity:0.72200006;fill:#ff0000;fill-opacity:1;stroke:none"
+       id="rect3094"
+       width="2.1428571"
+       height="0.71428573"
+       x="175.71428"
+       y="-92.14286"
+       transform="translate(0,692.35975)" />
+    <rect
+       y="713.78833"
+       x="36.428574"
+       height="42.578125"
+       width="39.999996"
+       id="rect3098"
+       style="opacity:0.72200006;fill:#ffff00;fill-opacity:1;stroke:none" />
+    <rect
+       style="opacity:0.72200006000000005;fill:#0000ff;fill-opacity:1;stroke:none"
+       id="rect3100"
+       width="39.999996"
+       height="42.578125"
+       x="16.428574"
+       y="735.21692" />
+    <rect
+       y="740.21692"
+       x="147.85715"
+       height="42.578125"
+       width="39.999996"
+       id="rect3102"
+       style="opacity:0.72200006;fill:#00ff00;fill-opacity:1;stroke:none" />
+  </g>
+</svg>
