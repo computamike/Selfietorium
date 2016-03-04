@@ -13,26 +13,32 @@
 #  The instruction to the subjects
 #
 # EG:
-# +------------+----------------------------------------------------------+---------+
-# |Photo number| Shooting instruction                                     |ImageID  |
-# +------------+----------------------------------------------------------+---------+
-# | 1          | Ok.  Big smiles everyone                                 |image3085|
-# | 2          | That looked amazing.Ok - now everyone wave at the camera.|image3087|
-# | 3          | Wow - and you guys aren't professional Models?  Smile!   |image3045|
-# | 4          | Great... last one now..  Got nuts everyone!              |image3085|
-# +------------+----------------------------------------------------------+---------+
+# +----------------------------------------------------------+---------+
+# | Shooting instruction                                     |ImageID  |
+# +----------------------------------------------------------+---------+
+# | Ok.  Big smiles everyone                                 |image3085|
+# | That looked amazing.Ok - now everyone wave at the camera.|image3087|
+# | Wow - and you guys aren't professional Models?  Smile!   |image3045|
+# | Great... last one now..  Got nuts everyone!              |image3085|
+# +----------------------------------------------------------+---------+
 #
 # this allows the photo program the ability to prompt the subjects appropriately, and makes updating the template easier (straight XPath update)
+#
+# Note : order is determined from the Image ID.  Creating an image in Inkscape will increment the image.  Therefore if you create your images in the order that you want them to be taken, then the photo ordering should work fine.  
+#  the Shoot list is ordered by the ImageID - meaning that you can write your own ID's for photos if you want - however the order of these ID's will determine the shoot order
 
 from lxml import etree as ET
 from lxml.etree import QName
 
-tree = ET.parse('../6x4.Template1.-.Linked.Files.svg')
-root = tree.getroot()
+class PhotoShoot(object):
+    pass
+    def __str__(self):
+        return '|' + self.imageID + '|' + self.title  +'|'
+    
 
-
-# First - lets set up some SVG namespaces
-
+#
+# CONSTANTS
+#
 ns = {
     'dc'    : 'http://purl.org/dc/elements/1.1/',
 	'cc'    : 'http://creativecommons.org/ns#',
@@ -43,14 +49,34 @@ ns = {
     'inkscape' : 'http://www.inkscape.org/namespaces/inkscape'
     }
 
-p = tree.xpath('/svg:svg/svg:g/svg:image',namespaces=ns)
 
-for child in p:
-    imageID = child.attrib['id']
-    title = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ imageID + '\']/svg:title',namespaces=ns)
-    print "Image ID : = " + imageID
-    if (len(title) > 0):
-        print title[0].text
-    print '----------'
-    
- 
+
+
+
+def PrintLists(list):
+    for child in list: 
+        print child  
+
+
+def LoadPhotoShoot(templateFile):
+    """
+    Load a template file, and read the PhotoShoot information (shots and prompts in order)
+    """
+    tree = ET.parse(templateFile)
+    root = tree.getroot()
+    # First - lets set up some SVG namespaces
+    p = tree.xpath('/svg:svg/svg:g/svg:image',namespaces=ns)
+    simpleList = []
+    for child in p:
+        title = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']/svg:title',namespaces=ns)
+        x = PhotoShoot()
+        x.imageID = child.attrib['id']
+        x.title = title[0].text or ""
+        simpleList.append(x)
+    return sorted(simpleList, key=lambda x: x.imageID, reverse=False)
+
+
+simpleList = LoadPhotoShoot('../6x4.Template1.-.Linked.Files.svg')
+
+
+PrintLists(simpleList)
