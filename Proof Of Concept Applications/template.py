@@ -50,9 +50,6 @@ ns = {
     }
 
 
-
-
-
 def PrintLists(list):
     for child in list: 
         print child  
