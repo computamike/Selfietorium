@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="6x4 Template1 - Linked Files.svg">
+   sodipodi:docname="Layout.svg">
   <defs
      id="defs4">
     <clipPath
@@ -90,7 +90,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -107,8 +107,8 @@
        height="108"
        width="191.99998"
        clip-path="url(#clipPath3058)">
-      <desc
-         id="desc3106">Come one... you can do better than that...</desc>
+      <title
+         id="title3091">Come on... you can do better than that...</title>
     </image>
     <rect
        y="709.50262"
@@ -125,8 +125,8 @@
        height="108"
        width="192"
        clip-path="url(#clipPath3073)">
-      <desc
-         id="desc3108">That's better... One more - Big smiles everyone</desc>
+      <title
+         id="title3089">That's better... One more - Big smiles everyone</title>
     </image>
     <image
        y="926.50262"
@@ -148,8 +148,8 @@
        width="363.17511"
        clip-path="url(#clipPath3043)"
        transform="translate(-642.85716,150)">
-      <desc
-         id="desc3104">Ok - get ready everyone..</desc>
+      <title
+         id="title3093">Ok - get ready everyone..</title>
     </image>
     <rect
        style="opacity:0.72200006;fill:#ff0000;fill-opacity:1;stroke:none"
