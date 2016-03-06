@@ -14,8 +14,8 @@
    height="1080"
    id="svg4266"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="Error.svg">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="Attract.svg">
   <defs
      id="defs4268">
     <linearGradient
@@ -48,7 +48,48 @@
        y1="1071.3287"
        x2="3.5527137e-014"
        y2="0.34990761"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-1136.0849,61.282587)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4800"
+       id="linearGradient3801"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-6.4122452e-5,381.83766)"
+       x1="9.9475983e-014"
+       y1="1071.3287"
+       x2="3.5527137e-014"
+       y2="0.34990761" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4800-8"
+       id="linearGradient4806-9"
+       x1="9.9475983e-14"
+       y1="1071.3287"
+       x2="3.5527137e-14"
+       y2="0.34990761"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient4800-8">
+      <stop
+         style="stop-color:#ececec;stop-opacity:1;"
+         offset="0"
+         id="stop4802-6" />
+      <stop
+         style="stop-color:#bbbfc2;stop-opacity:1;"
+         offset="1"
+         id="stop4804-3" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(3.5899734e-5,-3.0020828e-5)"
+       y2="0.34990761"
+       x2="3.5527137e-14"
+       y1="1071.3287"
+       x1="9.9475983e-14"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3061"
+       xlink:href="#linearGradient4800-8"
+       inkscape:collect="always" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -57,17 +98,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.42426407"
-     inkscape:cx="867.15487"
-     inkscape:cy="528.73908"
+     inkscape:zoom="0.42426408"
+     inkscape:cx="613.51343"
+     inkscape:cy="167.57073"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1020"
+     inkscape:window-height="552"
+     inkscape:window-x="0"
+     inkscape:window-y="36"
+     inkscape:window-maximized="1"
+     inkscape:snap-to-guides="false" />
   <metadata
      id="metadata4271">
     <rdf:RDF>
@@ -76,7 +118,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -84,120 +126,6 @@
      id="layer1"
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
-    <rect
-       style="fill:url(#linearGradient4806);fill-opacity:1.0;stroke:#000000;stroke-width:4.97875070999999990;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect4282"
-       width="1275.0212"
-       height="1075.0212"
-       x="2.4893754"
-       y="2.4894073" />
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot4808"
-       style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'Mom´sTypewriter';-inkscape-font-specification:'Mom´sTypewriter'"
-       transform="matrix(1.4367477,0,0,1.4367477,-69.949572,-123.69792)"><flowRegion
-         id="flowRegion4810"><rect
-           id="rect4812"
-           width="1083.3334"
-           height="290"
-           x="83.333336"
-           y="110"
-           style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Mom´sTypewriter';-inkscape-font-specification:'Mom´sTypewriter'" /></flowRegion><flowPara
-         id="flowPara4814"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood">SELFIETORIUM</flowPara></flowRoot>    <flowRoot
-       transform="matrix(1.4367477,0,0,1.4367477,-69.949572,-123.69792)"
-       style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ffffff;font-family:'Mom´sTypewriter';-inkscape-font-specification:'Mom´sTypewriter';stroke-opacity:1"
-       id="flowRoot3014"
-       xml:space="preserve"><flowRegion
-         id="flowRegion3016"><rect
-           style="font-size:64px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Mom´sTypewriter';-inkscape-font-specification:'Mom´sTypewriter';stroke:#ffffff;stroke-opacity:1"
-           y="110"
-           x="83.333336"
-           height="290"
-           width="1083.3334"
-           id="rect3018" /></flowRegion><flowPara
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;stroke:#ffffff;stroke-opacity:1"
-         id="flowPara3020">SELFIETORIUM</flowPara></flowRoot>    <text
-       xml:space="preserve"
-       style="font-size:46.31093979px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="40.00005"
-       y="198.10771"
-       id="text5390"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan5392"
-         x="40.00005"
-         y="198.10771"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood">Roll Up.. Roll up, and come get your photo taken </tspan><tspan
-         sodipodi:role="line"
-         x="40.00005"
-         y="255.99638"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         id="tspan5394">using the latest in photogramography and </tspan><tspan
-         sodipodi:role="line"
-         x="40.00005"
-         y="313.88507"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         id="tspan5396">telecommunications technology</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text5398"
-       y="495.09256"
-       x="40.00005"
-       style="font-size:46.31093979px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       xml:space="preserve"><tspan
-         id="tspan5404"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="495.09256"
-         x="40.00005"
-         sodipodi:role="line">Photographic imagery captured by this artisan</tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="552.98126"
-         x="40.00005"
-         sodipodi:role="line"
-         id="tspan5411">aparatus will be captured by automated </tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="610.86993"
-         x="40.00005"
-         sodipodi:role="line"
-         id="tspan5413">photographer automata and sent - without human </tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="668.75861"
-         x="40.00005"
-         sodipodi:role="line"
-         id="tspan5415">intervention to a cloud, whereupon it may be </tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="726.64728"
-         x="40.00005"
-         sodipodi:role="line"
-         id="tspan5417">observed - preserved for all time as though </tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="784.53595"
-         x="40.00005"
-         sodipodi:role="line"
-         id="tspan5419">trapped in amber, and additionally a COLOUR </tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="842.42462"
-         x="40.00005"
-         sodipodi:role="line"
-         id="tspan5463">print may be obtained from a similarly automatic</tspan><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood"
-         y="900.31329"
-         x="40.00005"
-         sodipodi:role="line"
-         id="tspan5465">device</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:46.31093979px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="44.714096"
-       y="1037.2078"
-       id="text5421"
-       sodipodi:linespacing="125%"><tspan
-         id="tspan5433"
-         sodipodi:role="line"
-         x="44.714096"
-         y="1037.2078"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood">twitter.com/selfietorium #hastag </tspan></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot5435"
@@ -208,5 +136,102 @@
            height="122.56518"
            x="287.55676"
            y="1037.5736" /></flowRegion><flowPara
-         id="flowPara5441"></flowPara></flowRoot>  </g>
+         id="flowPara5441" /></flowRoot>    <rect
+       style="fill:url(#linearGradient3061);fill-opacity:1;stroke:#000000;stroke-width:4.97875071;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4282"
+       width="1275.021"
+       height="1075.0212"
+       x="2.4893754"
+       y="2.4893844" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
+       id="rect3803"
+       width="1275.8884"
+       height="1075.8884"
+       x="2.0558052"
+       y="2.0557671" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3017"
+       y="120.54898"
+       x="38.302631"
+       style="font-size:91.95156860000000165px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#fffdfe;font-family:Sans;stroke-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+       xml:space="preserve"><tspan
+         id="tspan3023"
+         style="font-size:91.95156860000000165px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;stroke:#fffdfe;stroke-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+         y="120.54898"
+         x="38.302631"
+         sodipodi:role="line">SELFIETORIUM</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="56.568542"
+       y="245.61403"
+       id="text3080"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3082"
+         x="56.568542"
+         y="245.61403"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood">Roll Up.. Roll up, and come get your photo taken</tspan><tspan
+         sodipodi:role="line"
+         x="56.568542"
+         y="295.61401"
+         id="tspan3084"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood">using the latest in photogramography and </tspan><tspan
+         sodipodi:role="line"
+         x="56.568542"
+         y="345.61401"
+         id="tspan3086"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood">telecommunications technology.</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3094"
+       y="455.38904"
+       x="56.568542"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;fill:#000000"
+         y="455.38904"
+         x="56.568542"
+         id="tspan3096"
+         sodipodi:role="line">Photogrammatic imagery captured using this artisnal </tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;fill:#000000"
+         y="505.38904"
+         x="56.568542"
+         sodipodi:role="line"
+         id="tspan3102">aparatus will be captured by the latest automated </tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;fill:#000000"
+         id="tspan3100"
+         y="555.38904"
+         x="56.568542"
+         sodipodi:role="line">photogramography automata and sent - without human</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;fill:#000000"
+         y="605.38904"
+         x="56.568542"
+         sodipodi:role="line"
+         id="tspan3111">intervention - fore preservation for all time, and </tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;fill:#000000"
+         y="655.38904"
+         x="56.568542"
+         sodipodi:role="line"
+         id="tspan3113">additionally a COLOUR printed reproduction may be </tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:My Underwood;-inkscape-font-specification:My Underwood;fill:#000000"
+         y="705.38904"
+         x="56.568542"
+         sodipodi:role="line"
+         id="tspan3117">obtained from a similar automatic printing automata.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="56.568542"
+       y="907.93738"
+       id="text3121"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3133"
+         sodipodi:role="line"
+         x="56.568542"
+         y="907.93738"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;font-family:My Underwood;-inkscape-font-specification:My Underwood">#Selfietorium</tspan></text>
+  </g>
 </svg>

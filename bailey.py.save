@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+import RPi.GPIO as GPIO
+import pygame
+from pygame.locals import *
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+GPIO.setup(7, GPIO.OUT) 
+# 7 is the for LED1. You need to do this for each LED, or use lists, etc
+GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP) 
+# 21 is the for the Red button. You need to do this for each button, or use lists, etc
+
+
+pygame.init()
+WIDTH = 1280
+HEIGHT = 1080
+windowSurface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+
+img = pygame.image.load("myimage.jpg")
+
+while True:
+        events = pygame.event.get()
+	if GPIO.input(21):
+            GPIO.output(7,1)
+        else:
+            GPIO.output(7,0)
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+        windowSurface.blit(img, (0, 0)) #Replace (0, 0) with desired coordinates
