@@ -89,7 +89,7 @@ def ErrorSettings (obj,child_of_root):
 
 def GetPicturecount (obj):
     tree = ElementTree()
-    tree.parse(loutfile)     
+    tree.parse(obj.LayoutUsed)     
     picCount = 0                    
     for node in tree.iter():
         if node.tag.split("}")[1] == 'image':
@@ -129,7 +129,7 @@ class initVals ():
         
 
 initsettings = initVals()
-inifile = r"C:\import test\boothsettings.xml"
+inifile = "boothsettings.xml"
 tree = etree.ElementTree(file=inifile)
 root = tree.getroot()
 #set all the global settings
