@@ -49,6 +49,12 @@ ns = {
     'inkscape' : 'http://www.inkscape.org/namespaces/inkscape'
     }
 
+def updateNode(svg_data,id,value):
+    tree = ET.fromstring(svg_data)
+    NodeToUpdate = tree.xpath('/svg:svg/svg:g/svg:text[@id=\''+ id + '\']/svg:tspan',namespaces=ns)
+    NodeToUpdate[0].text = value
+    xmlstr = ET.tostring(tree)
+    return xmlstr
 
 def PrintLists(list):
     for child in list: 
@@ -73,7 +79,8 @@ def LoadPhotoShoot(templateFile):
     return sorted(simpleList, key=lambda x: x.imageID, reverse=False)
 
 
-simpleList = LoadPhotoShoot('../6x4.Template1.-.Linked.Files.svg')
-
-
-PrintLists(simpleList)
+#simpleList = LoadPhotoShoot('../6x4.Template1.-.Linked.Files.svg')
+#svg_data = open('../Instructions2.svg').read()
+#svg_data2 = updateNode(svg_data,'countDown','5')
+#print svg_data2
+#PrintLists(simpleList)
