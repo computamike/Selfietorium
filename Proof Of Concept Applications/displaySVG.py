@@ -5,6 +5,7 @@ import array
 import math
 import cairo
 import pygame
+import pygame.display
 import rsvg
 import PIL.Image
 import sys
@@ -62,26 +63,47 @@ def AttractScreen():
     pygame.display.flip()
     
 
+def PicamGetPhoto(width,height):
+    picamImage = pygame.image.load("../Photo1.bmp")
+    picamImage = pygame.transform.scale(picamImage,(width,height))
+    return picamImage
 
 def PreenScreen():
     svg_data = open('../Instructions2.svg').read()
-    
+    screenGeometry = template.findGeometry(svg_data)
+    scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
+    scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
+    picam = template.findNode(svg_data,'//svg:rect[@id="picam"]')
+    pcamWidth = int(math.ceil(float(picam.attrib['width'])*scaleWidth))
+    pcamHeight =int(math.ceil(float(picam.attrib['height'])*scaleHeight))
+    picamx= int(math.floor(float(picam.attrib['x'])*scaleWidth))
+    picamy= int(math.floor(float(picam.attrib['y'])*scaleHeight))
+  
+    photo = PicamGetPhoto(int(pcamWidth),int(pcamHeight))
 
     for i in range(5,0,-1):
-        print i
         svg_data = template.updateNode(svg_data,'countDown',str(i))
         IMG = load_svg_string(svg_data)
         screen.blit(background,(0,0))
+        
         screen.blit(IMG,(0,0))
+        screen.blit(photo,(picamx,picamy))
         pygame.display.flip()
+
         pygame.time.delay(1000)
+    sounda.play()
     return "ATTRACT"
 
     
 state = "ATTRACT"
 
 pygame.init()
-pygame.display.set_mode((WIDTH,HEIGHT))
+pygame.mixer.init(48000,-16,1,1024)
+sounda = pygame.mixer.Sound("62491__benboncan__dslr-click.wav")
+
+pygame.display.set_mode((WIDTH,HEIGHT),0,16)
+ 
+
 background = pygame.Surface((WIDTH,HEIGHT))
 background = background.convert()
 background.fill((0,0,0))

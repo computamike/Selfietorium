@@ -56,6 +56,19 @@ def updateNode(svg_data,id,value):
     xmlstr = ET.tostring(tree)
     return xmlstr
 
+def findNode(svg_data,xpath):
+    tree = ET.fromstring(svg_data)
+    NodeToUpdate = tree.xpath(xpath,namespaces=ns)
+    if len(NodeToUpdate) >0:
+        return NodeToUpdate[0]
+    return None
+
+def findGeometry(svg_data):
+    tree = ET.fromstring(svg_data)
+    return (tree.attrib["width"],tree.attrib["height"])
+
+
+
 def PrintLists(list):
     for child in list: 
         print child  
@@ -80,7 +93,17 @@ def LoadPhotoShoot(templateFile):
 
 
 #simpleList = LoadPhotoShoot('../6x4.Template1.-.Linked.Files.svg')
-#svg_data = open('../Instructions2.svg').read()
-#svg_data2 = updateNode(svg_data,'countDown','5')
+
+svg_data = open('../Instructions2.svg').read()
+svg_data2 = findGeometry(svg_data)
+
+#svg_data2 = findNode(svg_data,'//svg:rect[@id="picam"]')[0]
+print svg_data2
+#print svg_data2.attrib['height']
+#print svg_data2.attrib['x']
+#print svg_data2.attrib['y']
+
 #print svg_data2
+#for l in svg_data2 :
+#    print ET.tostring(l)
 #PrintLists(simpleList)
