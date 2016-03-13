@@ -94,11 +94,11 @@ def LoadPhotoShoot(templateFile):
 
 #simpleList = LoadPhotoShoot('../6x4.Template1.-.Linked.Files.svg')
 
-svg_data = open('../Instructions2.svg').read()
-svg_data2 = findGeometry(svg_data)
+#svg_data = open('../Instructions2.svg').read()
+#svg_data2 = findGeometry(svg_data)
 
 #svg_data2 = findNode(svg_data,'//svg:rect[@id="picam"]')[0]
-print svg_data2
+#print svg_data2
 #print svg_data2.attrib['height']
 #print svg_data2.attrib['x']
 #print svg_data2.attrib['y']

@@ -101,15 +101,21 @@ pygame.init()
 pygame.mixer.init(48000,-16,1,1024)
 sounda = pygame.mixer.Sound("62491__benboncan__dslr-click.wav")
 
+
+print pygame.display.list_modes(16,pygame.FULLSCREEN)
+
+
 pygame.display.set_mode((WIDTH,HEIGHT),0,16)
- 
+#print 	BestMode
+#\WIDTH = BestMode[0]
+#HEIGHT = BestMode[1]
 
 background = pygame.Surface((WIDTH,HEIGHT))
 background = background.convert()
 background.fill((0,0,0))
 
 
-screen = pygame.display.set_mode((WIDTH,HEIGHT))
+screen = pygame.display.set_mode((WIDTH,HEIGHT),0,16)
 c=pygame.time.Clock()
 while True:
 
