@@ -10,6 +10,7 @@ import rsvg
 import PIL.Image
 import sys
 import template
+import configuration
 WIDTH = 640
 HEIGHT = 480
 
@@ -68,7 +69,7 @@ def PicamGetPhoto(width,height):
     picamImage = pygame.transform.scale(picamImage,(width,height))
     return picamImage
 
-def PreenScreen():
+def PreenScreen(photoshoot):
     svg_data = open('../Instructions2.svg').read()
     screenGeometry = template.findGeometry(svg_data)
     scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
@@ -78,61 +79,69 @@ def PreenScreen():
     pcamHeight =int(math.ceil(float(picam.attrib['height'])*scaleHeight))
     picamx= int(math.floor(float(picam.attrib['x'])*scaleWidth))
     picamy= int(math.floor(float(picam.attrib['y'])*scaleHeight))
-  
-    photo = PicamGetPhoto(int(pcamWidth),int(pcamHeight))
 
-    for i in range(5,0,-1):
-        svg_data = template.updateNode(svg_data,'countDown',str(i))
-        IMG = load_svg_string(svg_data)
-        screen.blit(background,(0,0))
+    for shot in photoshoot:
+        photo = PicamGetPhoto(int(pcamWidth),int(pcamHeight))
+        for i in range(5,0,-1):
+            svg_data = template.updateNode(svg_data,'countDown',str(i))
+            IMG = load_svg_string(svg_data)
+            screen.blit(background,(0,0))
         
-        screen.blit(IMG,(0,0))
-        screen.blit(photo,(picamx,picamy))
-        pygame.display.flip()
+            screen.blit(IMG,(0,0))
+            screen.blit(photo,(picamx,picamy))
+            pygame.display.flip()
 
-        pygame.time.delay(1000)
-    sounda.play()
+            pygame.time.delay(500)
+        sounda.play()
     return "ATTRACT"
 
-    
-state = "ATTRACT"
-
-pygame.init()
-pygame.mixer.init(48000,-16,1,1024)
-sounda = pygame.mixer.Sound("62491__benboncan__dslr-click.wav")
-
-
-print pygame.display.list_modes(16,pygame.FULLSCREEN)
-
-
-pygame.display.set_mode((WIDTH,HEIGHT),0,16)
-#print 	BestMode
-#\WIDTH = BestMode[0]
-#HEIGHT = BestMode[1]
-
-background = pygame.Surface((WIDTH,HEIGHT))
-background = background.convert()
-background.fill((0,0,0))
-
-
-screen = pygame.display.set_mode((WIDTH,HEIGHT),0,16)
-c=pygame.time.Clock()
-while True:
-
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-             if event.key == pygame.K_q:
-                pygame.quit()
-                sys.exit()
-             if event.key == pygame.K_p:
-                 print "RUN PRINT"
-                 if state == "ATTRACT":
-                     state = "PREEN"
-  
-    if state == "ATTRACT":
-        AttractScreen()
-    if state == "PREEN":
-        state = PreenScreen()
-
+def debugPrintConfiguration(config,photoshoot):
+    """Prints configuration to console."""
+    print "Starting selfietorium..."
+    print "------------------------"
+    print
+    print "Configuration :"
+    print 
+    print " Template :" + config.layout
+    print
+    print
+    for shoot in photoshoot:
+            print shoot
+            
+if __name__ == '__main__':
+    config = configuration.ConfigFile("boothsettings.json")
+    config.Load()
+    photoshoot = template.LoadPhotoShoot(config.layout)
+    debugPrintConfiguration(config,photoshoot)
+        
+    state = "ATTRACT"
+    pygame.init()
+    pygame.mixer.init(48000,-16,1,1024)
+    sounda = pygame.mixer.Sound("62491__benboncan__dslr-click.wav")
+    print pygame.display.list_modes(16,pygame.FULLSCREEN)
+    pygame.display.set_mode((WIDTH,HEIGHT),0,16)
+    #print 	BestMode
+    #\WIDTH = BestMode[0]
+    #HEIGHT = BestMode[1]
+    background = pygame.Surface((WIDTH,HEIGHT))
+    background = background.convert()
+    background.fill((0,0,0))
+    screen = pygame.display.set_mode((WIDTH,HEIGHT),0,16)
+    c=pygame.time.Clock()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                 if event.key == pygame.K_q:
+                    pygame.quit()
+                    sys.exit()
+                 if event.key == pygame.K_p:
+                     print "RUN PRINT"
+                     if state == "ATTRACT":
+                         state = "PREEN"
+                         
+            if state == "ATTRACT":
+              AttractScreen()
+            if state == "PREEN":
+              state = PreenScreen(photoshoot)
     # c.tick(1)
 
