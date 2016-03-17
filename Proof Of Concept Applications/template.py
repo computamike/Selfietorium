@@ -47,6 +47,7 @@ def updateNode(svg_data,id,value):
     return xmlstr
 
 
+
 def findNode(svg_data,xpath):
     """
     Finds a node based on an Xpath.
@@ -61,6 +62,22 @@ def findNode(svg_data,xpath):
     if len(NodeToUpdate) >0:
         return NodeToUpdate[0]
     return None
+
+def deleteNode(svg_data,xpath):
+    """
+    Deletes a node based on an Xpath.
+    Args:
+        svg_data : String containing template data
+        xpath    : XPath of element to find
+    Returns:
+        svg data cleansed of the offending node.
+    """
+    tree = ET.fromstring(svg_data)
+    NodeToUpdate = tree.xpath(xpath,namespaces=ns)
+    if len(NodeToUpdate) >0:
+        NodeToUpdate[0].getparent().remove(NodeToUpdate[0])
+    return  ET.tostring(tree)
+
 
 
 def findGeometry(svg_data):

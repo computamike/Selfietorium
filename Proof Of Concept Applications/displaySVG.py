@@ -11,6 +11,10 @@ import PIL.Image
 import sys
 import template
 import configuration
+import pygameTextRectangle
+import datetime 
+ 
+
 WIDTH = 640
 HEIGHT = 480
 
@@ -80,19 +84,57 @@ def PreenScreen(photoshoot):
     picamx= int(math.floor(float(picam.attrib['x'])*scaleWidth))
     picamy= int(math.floor(float(picam.attrib['y'])*scaleHeight))
 
+    prompt = template.findNode(svg_data,'//svg:rect[@id="prompt"]')
+    svg_data=template.deleteNode(svg_data,'//svg:rect[@id="prompt"]')
+
+    promptfont = template.findNode(svg_data,'//svg:text[@id="promptfont"]')
+    svg_data=template.deleteNode(svg_data,'//svg:text[@id="promptfont"]')
+    
+    #promptFontsize = promptfont.attrib['font-size']
+
+    print promptfont
+ 
+    promptx = int(math.floor(float(prompt.attrib['x'])*scaleWidth))
+    prompty = int(math.floor(float(prompt.attrib['y'])*scaleHeight))
+    promptWidth = int(math.ceil(float(prompt.attrib['width'])*scaleWidth))
+    promptHeight =int(math.ceil(float(prompt.attrib['height'])*scaleHeight))
+    promptBackground = prompt.attrib['style']
+
+    print promptBackground
+
     for shot in photoshoot:
         photo = PicamGetPhoto(int(pcamWidth),int(pcamHeight))
-        for i in range(5,0,-1):
-            svg_data = template.updateNode(svg_data,'countDown',str(i))
+        my_font = pygame.font.SysFont("My Underwood", 30)
+        
+        my_string = str(shot.title)
+        my_rect = pygame.Rect((promptx, prompty ,promptWidth, promptHeight))
+        prompt = pygameTextRectangle.render_textrect(my_string, my_font, my_rect, (0, 0, 128), (0, 0, 0,0), 1)
+
+        
+        start = datetime.datetime.now()
+        end = datetime.datetime.now()
+        Preentime = 5
+        preentimeSpent =(end-start).seconds      
+        while Preentime-preentimeSpent >0:
+            end =  datetime.datetime.now()
+            preentimeSpent =(end-start).seconds   
+            if Preentime-preentimeSpent ==0 :
+                break        
+            svg_data = template.updateNode(svg_data,'countDown',str(Preentime-preentimeSpent))
             IMG = load_svg_string(svg_data)
             screen.blit(background,(0,0))
-        
             screen.blit(IMG,(0,0))
             screen.blit(photo,(picamx,picamy))
+            screen.blit(prompt,(promptx,prompty))    
             pygame.display.flip()
-
-            pygame.time.delay(500)
+            pygame.time.delay(25)# this needs to be more realistic - this would only update after .5 seconds.  Instead we need a routine that refreshes the screen and works out how long has elapsed.
         sounda.play()
+        pygame.time.delay(500) 
+        screen.blit(background,(0,0))
+        screen.blit(pygame.transform.scale(photo,(WIDTH,HEIGHT)),(0,0))
+        pygame.display.flip()
+        pygame.time.delay(2000)       
+
     return "ATTRACT"
 
 def debugPrintConfiguration(config,photoshoot):
