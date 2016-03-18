@@ -6,14 +6,15 @@ import math
 import cairo
 import pygame
 import pygame.display
+import pygame.camera
 import rsvg
 import PIL.Image
 import sys
 import template
 import configuration
 import pygameTextRectangle
-import datetime 
- 
+import datetime
+
 
 WIDTH = 640
 HEIGHT = 480
@@ -49,7 +50,7 @@ def load_svg(filename):
 
     svg.render_cairo(ctx)
     return pygame.image.frombuffer(bgra_rgba(surface),(WIDTH,HEIGHT),'RGBA')
-                                   
+
 
 # This is a poor state implementation - a better implementation will be
 #worked out in due course
@@ -66,12 +67,20 @@ def AttractScreen():
     screen.blit(background,(0,0))
     screen.blit(IMG,(0,0))
     pygame.display.flip()
-    
 
-def PicamGetPhoto(width,height):
-    picamImage = pygame.image.load("../Photo1.bmp")
-    picamImage = pygame.transform.scale(picamImage,(width,height))
-    return picamImage
+
+def PicamGetPhoto(cam):
+#    picamImage = pygame.image.load("../Photo1.bmp")
+#    picamImage = pygame.transform.scale(picamImage,(width,height))
+#    return picamImage
+    img = cam.get_image()
+    return img
+    #import pygame.image
+    #pygame.image.save(img, "photo.bmp")
+    #pygame.camera.quit()
+
+
+
 
 def PreenScreen(photoshoot):
     svg_data = open('../Instructions2.svg').read()
@@ -89,11 +98,11 @@ def PreenScreen(photoshoot):
 
     promptfont = template.findNode(svg_data,'//svg:text[@id="promptfont"]')
     svg_data=template.deleteNode(svg_data,'//svg:text[@id="promptfont"]')
-    
+
     #promptFontsize = promptfont.attrib['font-size']
 
     print promptfont
- 
+
     promptx = int(math.floor(float(prompt.attrib['x'])*scaleWidth))
     prompty = int(math.floor(float(prompt.attrib['y'])*scaleHeight))
     promptWidth = int(math.ceil(float(prompt.attrib['width'])*scaleWidth))
@@ -103,37 +112,39 @@ def PreenScreen(photoshoot):
     print promptBackground
 
     for shot in photoshoot:
-        photo = PicamGetPhoto(int(pcamWidth),int(pcamHeight))
+        photo = PicamGetPhoto(cam)
         my_font = pygame.font.SysFont("My Underwood", 30)
-        
+
         my_string = str(shot.title)
         my_rect = pygame.Rect((promptx, prompty ,promptWidth, promptHeight))
         prompt = pygameTextRectangle.render_textrect(my_string, my_font, my_rect, (0, 0, 128), (0, 0, 0,0), 1)
 
-        
+
         start = datetime.datetime.now()
         end = datetime.datetime.now()
         Preentime = 5
-        preentimeSpent =(end-start).seconds      
+        preentimeSpent =(end-start).seconds
         while Preentime-preentimeSpent >0:
+            photo = PicamGetPhoto(cam)
             end =  datetime.datetime.now()
-            preentimeSpent =(end-start).seconds   
+            preentimeSpent =(end-start).seconds
             if Preentime-preentimeSpent ==0 :
-                break        
+                break
             svg_data = template.updateNode(svg_data,'countDown',str(Preentime-preentimeSpent))
             IMG = load_svg_string(svg_data)
             screen.blit(background,(0,0))
             screen.blit(IMG,(0,0))
-            screen.blit(photo,(picamx,picamy))
-            screen.blit(prompt,(promptx,prompty))    
+            screen.blit(pygame.transform.scale(photo,(pcamWidth,pcamHeight)),(picamx,picamy))
+
+            screen.blit(prompt,(promptx,prompty))
             pygame.display.flip()
             pygame.time.delay(25)# this needs to be more realistic - this would only update after .5 seconds.  Instead we need a routine that refreshes the screen and works out how long has elapsed.
         sounda.play()
-        pygame.time.delay(500) 
+        pygame.time.delay(500)
         screen.blit(background,(0,0))
         screen.blit(pygame.transform.scale(photo,(WIDTH,HEIGHT)),(0,0))
         pygame.display.flip()
-        pygame.time.delay(2000)       
+        pygame.time.delay(2000)
 
     return "ATTRACT"
 
@@ -143,19 +154,26 @@ def debugPrintConfiguration(config,photoshoot):
     print "------------------------"
     print
     print "Configuration :"
-    print 
+    print
     print " Template :" + config.layout
     print
     print
     for shoot in photoshoot:
             print shoot
-            
+
 if __name__ == '__main__':
     config = configuration.ConfigFile("boothsettings.json")
     config.Load()
     photoshoot = template.LoadPhotoShoot(config.layout)
     debugPrintConfiguration(config,photoshoot)
-        
+
+
+    pygame.camera.init()
+    cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])
+    cam.start()
+
+
+
     state = "ATTRACT"
     pygame.init()
     pygame.mixer.init(48000,-16,1,1024)
@@ -180,10 +198,9 @@ if __name__ == '__main__':
                      print "RUN PRINT"
                      if state == "ATTRACT":
                          state = "PREEN"
-                         
+
             if state == "ATTRACT":
               AttractScreen()
             if state == "PREEN":
               state = PreenScreen(photoshoot)
     # c.tick(1)
-
