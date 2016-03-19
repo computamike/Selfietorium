@@ -14,7 +14,8 @@ import template
 import configuration
 import pygameTextRectangle
 import datetime
-
+import base64
+import StringIO
 
 WIDTH = 640
 HEIGHT = 480
@@ -79,8 +80,28 @@ def PicamGetPhoto(cam):
     #pygame.image.save(img, "photo.bmp")
     #pygame.camera.quit()
 
+def ConvertSurefaceToImage(surface):
+    pil=pygame.image.tostring(surface,"RGBA",False)
+    img = PIL.Image.fromstring("RGBA",(640,480),pil)
+    return img
 
-
+def layout(tplate,photos):
+    print "Laying out :" + tplate
+    updateNode = tplate
+    for shot in photos:
+        imgPhoto=ConvertSurefaceToImage(shot.photo)
+        output = StringIO.StringIO()
+        imgPhoto.save(output, format="PNG")
+        contents = output.getvalue()
+        output.close()
+        photoB64 = pygame.image.tostring(shot.photo,"RGB")
+        photoB64 = contents
+        base64data = base64.b64encode(contents)
+        strB64 = "data:image/png;base64,"+base64data
+        updateNode = template.updateNodeAttrib(updateNode,shot.imageID,"{http://www.w3.org/1999/xlink}href",strB64)
+    text_file = open("Output.svg", "w")
+    text_file.write(updateNode)
+    text_file.close()
 
 def PreenScreen(photoshoot):
     svg_data = open('../Instructions2.svg').read()
@@ -122,7 +143,7 @@ def PreenScreen(photoshoot):
 
         start = datetime.datetime.now()
         end = datetime.datetime.now()
-        Preentime = 5
+        Preentime = 1
         preentimeSpent =(end-start).seconds
         while Preentime-preentimeSpent >0:
             photo = PicamGetPhoto(cam)
@@ -135,17 +156,19 @@ def PreenScreen(photoshoot):
             screen.blit(background,(0,0))
             screen.blit(IMG,(0,0))
             screen.blit(pygame.transform.scale(photo,(pcamWidth,pcamHeight)),(picamx,picamy))
-
+            shot.image = photo
             screen.blit(prompt,(promptx,prompty))
             pygame.display.flip()
             pygame.time.delay(25)# this needs to be more realistic - this would only update after .5 seconds.  Instead we need a routine that refreshes the screen and works out how long has elapsed.
         sounda.play()
+        shot.photo = photo
         pygame.time.delay(500)
         screen.blit(background,(0,0))
         screen.blit(pygame.transform.scale(photo,(WIDTH,HEIGHT)),(0,0))
         pygame.display.flip()
         pygame.time.delay(2000)
-
+    tphotoshoot = svg_data = open(config.layout).read()
+    layout(tphotoshoot,photoshoot)
     return "ATTRACT"
 
 def debugPrintConfiguration(config,photoshoot):

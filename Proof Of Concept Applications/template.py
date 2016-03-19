@@ -12,8 +12,8 @@ class PhotoShoot(object):
     """Class that describes a photoshoot."""
     pass
     def __str__(self):
-        return '|' + self.imageID + '|' + self.title  +'|'
-    
+        return '|' + str(self.imageID) + '|' + str(self.title)  +'|' + str(self.photo)  +'|'
+
 
 #
 # CONSTANTS
@@ -28,7 +28,7 @@ ns = {
     'inkscape' : 'http://www.inkscape.org/namespaces/inkscape'
     }
 """Namespaces used by SVG files (created by Inkscape)."""
- 
+
 
 def updateNode(svg_data,id,value):
     """
@@ -46,6 +46,25 @@ def updateNode(svg_data,id,value):
     xmlstr = ET.tostring(tree)
     return xmlstr
 
+def updateNodeAttrib(svg_data,id,attrib,value):
+    """
+    Finds a Text Node based on ID, and sets its value.
+    Args:
+        svg_data : String containing template data
+        id       : id of element to find
+        value    : value to assign.
+    returns :
+        Updated SVG string data.
+    """
+
+
+    tree = ET.fromstring(svg_data)
+    NodeToUpdate = tree.xpath('//*[@id=\''+id+'\']',namespaces=ns)
+    #//*[@id='38']
+    NodeToUpdate[0].set(attrib,value)
+
+    #xmlstr = ET.tostring(tree)
+    return ET.tostring(tree)
 
 
 def findNode(svg_data,xpath):
@@ -129,6 +148,7 @@ def LoadPhotoShoot(templateFile):
         x = PhotoShoot()
         x.imageID = child.attrib['id']
         x.title = title[0].text or ""
+        x.photo=None
         simpleList.append(x)
     return sorted(simpleList, key=lambda x: x.imageID, reverse=False)
 
