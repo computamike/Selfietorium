@@ -1,5 +1,5 @@
 # Selfietorium
-A python based photo booth thing, being developed for a wedding November 2017.
+A python based photo booth thing, being developed for a wedding November 2017 - will be running using raspberry pi
 
 Photos are template based and support overlays. You can then take multiple photos and composite them within the template.
 
