@@ -14,8 +14,8 @@
    height="360"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="Layout.svg">
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="6x4.Template1.-.Linked.Files.svg">
   <defs
      id="defs4">
     <clipPath
@@ -70,17 +70,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="332.95087"
-     inkscape:cy="221.13374"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="380.32724"
+     inkscape:cy="287.37049"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="in"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1301"
+     inkscape:window-height="744"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -100,28 +100,23 @@
      id="layer1"
      transform="translate(0,-692.35975)">
     <image
+       sodipodi:absref="/home/mike/projects/Selfietorium/Photo2.jpg"
+       xlink:href="Photo2.jpg"
        y="926.50262"
-       x="2.9563904e-005"
+       x="2.9563904e-05"
        id="image3055"
-       xlink:href="file:///C:/Projects/Selfitorium/Photo2.jpg"
        height="108"
        width="191.99998"
        clip-path="url(#clipPath3058)">
       <title
          id="title3091">Come on... you can do better than that...</title>
     </image>
-    <rect
-       y="709.50262"
-       x="15.000022"
-       height="204.28571"
-       width="307.25461"
-       id="rect3012"
-       style="opacity:0.72200006;fill:#ff00ff;fill-opacity:1;stroke:none" />
     <image
+       sodipodi:absref="/home/mike/projects/Selfietorium/Photo3.jpg"
+       xlink:href="Photo3.jpg"
        y="926.50262"
        x="175"
        id="image3070"
-       xlink:href="file:///C:/Projects/Selfitorium/Photo3.jpg"
        height="108"
        width="192"
        clip-path="url(#clipPath3073)">
@@ -129,10 +124,11 @@
          id="title3089">That's better... One more - Big smiles everyone</title>
     </image>
     <image
+       sodipodi:absref="/home/mike/projects/Selfietorium/Photo4.jpg"
+       xlink:href="Photo4.jpg"
        y="926.50262"
        x="347.97"
        id="image3085"
-       xlink:href="file:///C:/Projects/Selfitorium/Photo4.jpg"
        height="108"
        width="192"
        clip-path="url(#clipPath3088)">
@@ -140,10 +136,11 @@
          id="title3110">Last one was brilliant - sure you can't do better ?  Last photo</title>
     </image>
     <image
+       sodipodi:absref="/home/mike/projects/Selfietorium/Photo1.jpg"
+       xlink:href="Photo1.jpg"
        y="559.5025"
        x="629.89691"
        id="image3038"
-       xlink:href="file:///C:/Projects/Selfitorium/Photo1.jpg"
        height="204.286"
        width="363.17511"
        clip-path="url(#clipPath3043)"
@@ -187,5 +184,28 @@
        width="39.999996"
        id="rect3102"
        style="opacity:0.72200006;fill:#00ff00;fill-opacity:1;stroke:none" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3455"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="translate(0,692.35975)"><flowRegion
+         id="flowRegion3457"><rect
+           id="rect3459"
+           width="181.42857"
+           height="200.71428"
+           x="336.42856"
+           y="17.142857" /></flowRegion><flowPara
+         id="flowPara3461" /></flowRoot>    <ellipse
+       id="path3554"
+       cx="384.86813"
+       cy="750.32416"
+       rx="35.355339"
+       ry="37.375645"
+       style="fill:#00ff00;stroke:#ff0000;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 371.73614,822.04497 c 46.46701,58.58885 -30.30458,72.73098 46.46701,58.58885 76.7716,-14.14214 74.75129,-12.12183 74.75129,-12.12183 l -12.12183,42.4264 -54.54824,-80.8122 0,0 32.32488,-58.58885"
+       id="path4356"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

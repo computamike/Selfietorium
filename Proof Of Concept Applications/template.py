@@ -144,10 +144,17 @@ def LoadPhotoShoot(templateFile):
     p = tree.xpath('/svg:svg/svg:g/svg:image',namespaces=ns)
     simpleList = []
     for child in p:
+        Image = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']',namespaces=ns)
         title = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']/svg:title',namespaces=ns)
         x = PhotoShoot()
         x.imageID = child.attrib['id']
-        x.title = title[0].text or ""
+        print x.imageID
+        print title
+        print title == None
+        print title == []
+        x.title = ""
+        if (title != [] ):
+            x.title = title[0].text or ""
         x.photo=None
         simpleList.append(x)
     return sorted(simpleList, key=lambda x: x.imageID, reverse=False)

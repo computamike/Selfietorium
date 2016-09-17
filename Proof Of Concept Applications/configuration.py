@@ -23,7 +23,13 @@ class ConfigFile:
         """Constructor for this object."""
         print "--BUILDING"
         self.inifile = iniFile
-        self.layout = '../blank.svg'
+        self.layout = '../6x4.Template1.-.Linked.Files.svg'
+        self.prePhotoPhrase = 'Smile'
+        self.photostore = 'Photos/'
+        self.preenTime = 5
+        self.photosTaken = 0
+        self.sheetspercartidge = 0
+        self.shutterSound = "62491__benboncan__dslr-click.wav"
         print self
         print "----"
 
@@ -32,6 +38,7 @@ class ConfigFile:
         with open(self.inifile, mode='r') as f:
             entry = json.load(f)
             self.layout = entry['layout']
+            self.preenTime = entry['preenTime']
             print self
             print "----"
             return entry
@@ -40,9 +47,12 @@ class ConfigFile:
         """Save data to config file."""
         configuration={}
         configuration['layout'] = self.layout
-        configuration['prePhotoPhrase']='Smile'
-        configuration['photosTaken']=5
-        configuration['sheetspercartidge'] = 18
+        configuration['prePhotoPhrase']=self.prePhotoPhrase
+        configuration['preenTime']=self.preenTime
+        configuration['photosTaken']=self.photosTaken
+        configuration['sheetspercartidge'] = self.sheetspercartidge
+        configuration['shutterSound'] = self.shutterSound
+
         print self.inifile
         with open(self.inifile, mode='w') as f:
             json.dump(configuration,f, indent=2)
@@ -52,6 +62,6 @@ if __name__ == '__main__':
     c = ConfigFile("boothsettings.json")
     c.Save()
     config = c.Load()
-    
+
     print config
     print config['layout']
