@@ -21,6 +21,7 @@ class ConfigFile:
     """A Configuration object - this object serialises / deserialises data to JSON format."""
     def __init__(self,iniFile):
         """Constructor for this object."""
+        print "--BUILDING"
         self.inifile = iniFile
         self.layout = '../6x4.Template1.-.Linked.Files.svg'
         self.prePhotoPhrase = 'Smile'
@@ -29,13 +30,17 @@ class ConfigFile:
         self.photosTaken = 0
         self.sheetspercartidge = 0
         self.shutterSound = "62491__benboncan__dslr-click.wav"
+        print self
+        print "----"
 
     def Load(self):
-        """Load configuration from file."""
+        print "--LOADING"
         with open(self.inifile, mode='r') as f:
             entry = json.load(f)
             self.layout = entry['layout']
             self.preenTime = entry['preenTime']
+            print self
+            print "----"
             return entry
 
     def Save(self):
@@ -57,3 +62,6 @@ if __name__ == '__main__':
     c = ConfigFile("boothsettings.json")
     c.Save()
     config = c.Load()
+
+    print config
+    print config['layout']
