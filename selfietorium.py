@@ -195,6 +195,30 @@ def AttractScreen(AttractSVGdata):
     screen.blit(IMG,(0,0))
     pygame.display.flip()
 
+def ErrorScreen(ErrorSVGdata):
+
+    my_font = pygame.font.SysFont(ERROR_FONT, SCREEN_FONT_SIZE)
+    my_string = "an error has occured"
+    screenGeometry = template.findGeometry(ErrorSVGdata)
+    scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
+    scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
+    prompt = template.findNode(ErrorSVGdata,'//svg:rect[@id="ErrorMessage"]')
+    ErrorSVGdata=template.deleteNode(ErrorSVGdata,'//svg:rect[@id="ErrorMessage"]')
+
+    IMG = load_svg_string(ErrorSVGdata)
+
+    promptx = int(math.floor(float(prompt.attrib['x'])*scaleWidth))
+    prompty = int(math.floor(float(prompt.attrib['y'])*scaleHeight))
+    promptWidth = int(math.ceil(float(prompt.attrib['width'])*scaleWidth))
+    promptHeight =int(math.ceil(float(prompt.attrib['height'])*scaleHeight))
+    my_rect = pygame.Rect((promptx, prompty ,promptWidth, promptHeight))
+    prompt = pygameTextRectangle.render_textrect(my_string, my_font, my_rect, ERROR_FONT_COLOUR , (0, 0, 0,0), 1)
+    screen.blit(background,(0,0))
+    screen.blit(IMG,(0,0))
+    screen.blit(prompt,(promptx,prompty))
+    pygame.display.flip()
+    pygame.time.delay(1000)
+
 def debugPrintConfiguration(config,photoshoot):
     """Prints configuration to console."""
     print "Starting selfietorium..."
@@ -233,6 +257,11 @@ if __name__ == '__main__':
     #Set Up Screens
     SCREEN_ATTRACT = open('Screens/Attract.svg').read()
     SCREEN_PREEN =   open('Screens/Instructions2.svg').read()
+    SCREEN_ERROR =   open('Screens/Error.svg').read()
+    ERROR_FONT  =   config.ErrorFont
+    ERROR_FONT_SIZE  =   config.ErrorFontSize
+    ERROR_FONT_COLOUR =  config.ErrorFontColour
+
 
     pygame.camera.init()
     cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])
@@ -258,18 +287,26 @@ if __name__ == '__main__':
 
     c=pygame.time.Clock()
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q:
-                    pygame.quit()
-                    sys.exit()
-                if event.key == pygame.K_p:
-                    if state == "ATTRACT":
-                        state = "PREEN"
-                if event.key == pygame.K_s:
-                    CAMERASOUND.play()
-            if state == "ATTRACT":
-              AttractScreen(SCREEN_ATTRACT)
-            if state == "PREEN":
-              state = PreenScreen(photoshoot,SCREEN_PREEN,config.preenTime)
+        try:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
+                        pygame.quit()
+                        sys.exit()
+                    if event.key == pygame.K_p:
+                        if state == "ATTRACT":
+                            state = "PREEN"
+                    if event.key == pygame.K_s:
+                        CAMERASOUND.play()
+                    if event.key == pygame.K_e:
+                        #ErrorScreen(SCREEN_ERROR)
+                        raise ValueError('A very specific bad thing happened')
+                if state == "ATTRACT":
+                    AttractScreen(SCREEN_ATTRACT)
+                if state == "PREEN":
+                    state = PreenScreen(photoshoot,SCREEN_PREEN,config.preenTime)
+        except Exception as e:
+            ErrorScreen(SCREEN_ERROR)
+
+
     # c.tick(1)

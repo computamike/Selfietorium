@@ -12,5 +12,12 @@
   "preenTime": 1,
   "Font": "CF Anarchy",
   "PhotoStore": "Photos/",
-  "Size": 15
+  "Size": 15,
+  "ErrorFontSize": 15,
+  "ErrorFont": "My Underwood",
+  "ErrorFontColour": [
+      0,
+      0,
+      0
+    ]
 }

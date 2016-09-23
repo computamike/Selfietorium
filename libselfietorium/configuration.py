@@ -32,6 +32,9 @@ class ConfigFile:
         self.photosTaken = 0
         self.sheetspercartidge = 0
         self.shutterSound = "62491__benboncan__dslr-click.wav"
+        self.FontColour = [0,0,0]
+        self.ErrorFont = "MyUnderwood"
+        self.ErrorFontSize = 20
 
     def Load(self):
         with open(self.inifile, mode='r') as f:
@@ -46,7 +49,9 @@ class ConfigFile:
             self.Font =  entry['Font']
             self.Size =  entry['Size']
             self.FontColour =  entry['FontColour']
-
+            self.ErrorFontColour =  entry['ErrorFontColour']
+            self.ErrorFont =  entry['ErrorFont']
+            self.ErrorFontSize =  entry['ErrorFontSize']
             return entry
 
     def Save(self):
@@ -62,6 +67,9 @@ class ConfigFile:
         configuration['FontColour'] = self.FontColour
         configuration['Size'] = self.Size
         configuration['Font'] = self.Font
+        configuration['ErrorFontColour'] = self.ErrorFontColour
+        configuration['ErrorFont'] = self.ErrorFont
+        configuration['ErrorFontSize'] = self.ErrorFontSize
 
         print self.inifile
         with open(self.inifile, mode='w') as f:
