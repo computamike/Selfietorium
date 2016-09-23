@@ -10,9 +10,9 @@ import pygame.camera
 import rsvg
 import PIL.Image
 import sys
-import template
-import configuration
-import pygameTextRectangle
+from libselfietorium import template
+from libselfietorium import configuration
+from libselfietorium import pygameTextRectangle
 import datetime
 import base64
 import StringIO
@@ -24,7 +24,9 @@ HEIGHT = 480                    # Height of the window
 SHOOTDIRECTORY = None           # Name of directory to store photographs taken
 PHOTOSOUNDEFFECT = None         # Sound effect to play when taking photo
 SCREEN_ATTRACT = None           # Attract Screen SVG XML data
-
+CAMERASOUND = None              # Camera noise to play when taking a photo.
+SCREEN_FONT = None
+FONT_COLOUR = None              #Colour to display updated text to subjects
 
 def bgra_rgba(surface):
         img = PIL.Image.frombuffer('RGBA',(surface.get_width(),surface.get_height()),surface.get_data(),'raw','BGRA',0,1)
@@ -71,14 +73,9 @@ def load_svg(filename):
 
 
 def PicamGetPhoto(cam):
-#    picamImage = pygame.image.load("../Photo1.bmp")
-#    picamImage = pygame.transform.scale(picamImage,(width,height))
-#    return picamImage
     img = cam.get_image()
     return img
-    #import pygame.image
-    #pygame.image.save(img, "photo.bmp")
-    #pygame.camera.quit()
+
 
 def ConvertSurefaceToImage(surface):
     pil=pygame.image.tostring(surface,"RGBA",False)
@@ -151,14 +148,14 @@ def PreenScreen(photoshoot,svg_data,Preentime=10):
     promptWidth = int(math.ceil(float(prompt.attrib['width'])*scaleWidth))
     promptHeight =int(math.ceil(float(prompt.attrib['height'])*scaleHeight))
     promptBackground = prompt.attrib['style']
-    print "1"
-    print photoshoot
+
+
     for shot in photoshoot:
         photo = PicamGetPhoto(cam)
-        my_font = pygame.font.SysFont("My Underwood", 30)
+        my_font = pygame.font.SysFont(SCREEN_FONT, SCREEN_FONT_SIZE)
         my_string = str(shot.title) or config.prePhotoPhrase
         my_rect = pygame.Rect((promptx, prompty ,promptWidth, promptHeight))
-        prompt = pygameTextRectangle.render_textrect(my_string, my_font, my_rect, (0, 0, 128), (0, 0, 0,0), 1)
+        prompt = pygameTextRectangle.render_textrect(my_string, my_font, my_rect, SCREEN_FONT_COLOUR , (0, 0, 0,0), 1)
         start = datetime.datetime.now()
         end = datetime.datetime.now()
 
@@ -177,12 +174,9 @@ def PreenScreen(photoshoot,svg_data,Preentime=10):
             shot.image = photo
             screen.blit(prompt,(promptx,prompty))
             pygame.display.flip()
-            pygame.time.delay(25)# this needs to be more realistic - this would only update after .5 seconds.  Instead we need a routine that refreshes the screen and works out how long has elapsed.
-        sounda.play()
+            pygame.time.delay(25)
+        CAMERASOUND.play()
         shot.photo = photo
-        print SHOOTDIRECTORY
-        print photo
-        print shot.imageID+".png"
         SavePhoto(SHOOTDIRECTORY,photo,shot.imageID+".png")
         pygame.time.delay(500)
         screen.blit(background,(0,0))
@@ -191,11 +185,8 @@ def PreenScreen(photoshoot,svg_data,Preentime=10):
         pygame.time.delay(2000)
 
     # Cache this...
-    print "here ok"
     tphotoshoot = svg_data = open(config.layout).read()
-    print "cp2"
     layout(tphotoshoot,photoshoot,SHOOTDIRECTORY )
-
     return "ATTRACT"
 
 def AttractScreen(AttractSVGdata):
@@ -217,14 +208,12 @@ def debugPrintConfiguration(config,photoshoot):
     print "Shutter Sound   : " + config.shutterSound
     print "Photo store     : " + config.photostore
     print "Pre-PhotoPhrase : " + config.prePhotoPhrase
-    print "Pre-PhotoPhrase : " + config.prePhotoPhrase
-    print "Pre-PhotoPhrase : " + config.prePhotoPhrase
-    print "Pre-PhotoPhrase : " + config.prePhotoPhrase
+    print "Update Font     : " + config.Font
+    print "Update Font Size: " + str(config.Size)
+    print "Update Font Colour: " + str(config.FontColour)
+    print
+    print
 
-    print
-    print
-    # for shoot in photoshoot:
-    #         print shoot
 
 if __name__ == '__main__':
     #Set up configuration
@@ -234,30 +223,27 @@ if __name__ == '__main__':
     #Set up variables
     SHOOTPHOTOSTORE = config.photostore
     SHOOTDIRECTORY = os.path.join(SHOOTPHOTOSTORE, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
-
+    SCREEN_FONT = config.Font
+    SCREEN_FONT_SIZE = config.Size
+    SCREEN_FONT_COLOUR = config.FontColour
     PHOTOSOUNDEFFECT = config.shutterSound
     photoshoot = template.LoadPhotoShoot(config.layout)
     debugPrintConfiguration(config,photoshoot)
 
     #Set Up Screens
-    SCREEN_ATTRACT = open('../Attract.svg').read()
-    SCREEN_PREEN =   open('../Instructions2.svg').read()
+    SCREEN_ATTRACT = open('Screens/Attract.svg').read()
+    SCREEN_PREEN =   open('Screens/Instructions2.svg').read()
 
     pygame.camera.init()
     cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])
     cam.start()
-
-
-
     state = "ATTRACT"
     pygame.init()
     pygame.mixer.init(48000,-16,1,1024)
-    sounda = pygame.mixer.Sound(PHOTOSOUNDEFFECT)
-    print pygame.display.list_modes(16,pygame.FULLSCREEN)
-    pygame.display.set_mode((WIDTH,HEIGHT),0,16)
-    #print 	BestMode
-    #\WIDTH = BestMode[0]
-    #HEIGHT = BestMode[1]
+    CAMERASOUND = pygame.mixer.Sound(PHOTOSOUNDEFFECT)
+    #pygame.display.set_mode((WIDTH,HEIGHT),0,16)
+    screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
+    pygame.mouse.set_visible(False)
     background = pygame.Surface((WIDTH,HEIGHT))
     background = background.convert()
     background.fill((0,0,0))
@@ -268,18 +254,20 @@ if __name__ == '__main__':
 
 
 
-    screen = pygame.display.set_mode((WIDTH,HEIGHT),0,16)
+    #screen = pygame.display.set_mode((WIDTH,HEIGHT),0,16)
+
     c=pygame.time.Clock()
     while True:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                 if event.key == pygame.K_q:
+                if event.key == pygame.K_q:
                     pygame.quit()
                     sys.exit()
-                 if event.key == pygame.K_p:
-                     if state == "ATTRACT":
-                         state = "PREEN"
-
+                if event.key == pygame.K_p:
+                    if state == "ATTRACT":
+                        state = "PREEN"
+                if event.key == pygame.K_s:
+                    CAMERASOUND.play()
             if state == "ATTRACT":
               AttractScreen(SCREEN_ATTRACT)
             if state == "PREEN":
