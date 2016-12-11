@@ -17,6 +17,7 @@ import datetime
 import base64
 import StringIO
 import os
+import traceback
 
 # Constants
 WIDTH = 640                     # Width of the window
@@ -30,7 +31,7 @@ FONT_COLOUR = None              #Colour to display updated text to subjects
 
 def bgra_rgba(surface):
         img = PIL.Image.frombuffer('RGBA',(surface.get_width(),surface.get_height()),surface.get_data(),'raw','BGRA',0,1)
-        return img.tostring('raw','RGBA',0,1)
+        return img.tobytes('raw','RGBA',0,1)
 
 def load_svg_string(svg_data):
     svg = rsvg.Handle(data=svg_data)
@@ -79,7 +80,7 @@ def PicamGetPhoto(cam):
 
 def ConvertSurefaceToImage(surface):
     pil=pygame.image.tostring(surface,"RGBA",False)
-    img = PIL.Image.fromstring("RGBA",(640,480),pil)
+    img = PIL.Image.frombytes("RGBA",(640,480),pil)
     return img
 
 
@@ -195,7 +196,7 @@ def AttractScreen(AttractSVGdata):
     screen.blit(IMG,(0,0))
     pygame.display.flip()
 
-def ErrorScreen(ErrorSVGdata):
+def ErrorScreen(ErrorSVGdata, xception):
 
     my_font = pygame.font.SysFont(ERROR_FONT, SCREEN_FONT_SIZE)
     my_string = "an error has occured"
@@ -218,6 +219,23 @@ def ErrorScreen(ErrorSVGdata):
     screen.blit(prompt,(promptx,prompty))
     pygame.display.flip()
     pygame.time.delay(1000)
+    print "Error :"
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    traceback_template = '''Traceback (most recent call last):
+      File "%(filename)s", line %(lineno)s, in %(name)s %(type)s: %(message)s\n'''    
+    traceback_details = {
+                         'filename': exc_traceback.tb_frame.f_code.co_filename,
+                         'lineno'  : exc_traceback.tb_lineno,
+                         'name'    : exc_traceback.tb_frame.f_code.co_name,
+                         'type'    : exc_type.__name__,
+                         'message' : exc_value.message, # or see traceback._some_str()
+                        }
+    print
+    print traceback.format_exc()
+    print
+    print traceback_template % traceback_details
+    print
+
 
 def debugPrintConfiguration(config,photoshoot):
     """Prints configuration to console."""
@@ -271,7 +289,7 @@ if __name__ == '__main__':
     pygame.mixer.init(48000,-16,1,1024)
     CAMERASOUND = pygame.mixer.Sound(PHOTOSOUNDEFFECT)
     #pygame.display.set_mode((WIDTH,HEIGHT),0,16)
-    screen = pygame.display.set_mode((640,480),pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((640,480))
     pygame.mouse.set_visible(False)
     background = pygame.Surface((WIDTH,HEIGHT))
     background = background.convert()
@@ -306,7 +324,7 @@ if __name__ == '__main__':
                 if state == "PREEN":
                     state = PreenScreen(photoshoot,SCREEN_PREEN,config.preenTime)
         except Exception as e:
-            ErrorScreen(SCREEN_ERROR)
+            ErrorScreen(SCREEN_ERROR,e)
 
 
     # c.tick(1)
