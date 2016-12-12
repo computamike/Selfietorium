@@ -12,4 +12,8 @@ This code has been tested on Ubuntu, using a laptop, and seems to work fine.
 
 DEPENDS ON : 
 
-lxml
+* LXML
+* RSVG
+* PICAM
+* PYGAME
+* Twitter (https://pypi.python.org/pypi/twitter/1.17.1)
