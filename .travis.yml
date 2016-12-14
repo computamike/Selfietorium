@@ -11,5 +11,5 @@ install: true
  
 script:
  # Build the Source Package
- debuild -S
- 
+ #debuild -S
+   - dpkg-buildpackage -us -uc 
