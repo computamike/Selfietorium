@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/computamike/Selfietorium.svg?branch=master)](https://travis-ci.org/computamike/Selfietorium)
 # Selfietorium
 A python based photo booth thing, being developed for a wedding November 2017 - will be running using raspberry pi
 
