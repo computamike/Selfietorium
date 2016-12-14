@@ -13,6 +13,8 @@ import sys
 from libselfietorium import template
 from libselfietorium import configuration
 from libselfietorium import pygameTextRectangle
+from libselfietorium import SendTweet
+
 import datetime
 import base64
 import StringIO
@@ -28,6 +30,7 @@ SCREEN_ATTRACT = None           # Attract Screen SVG XML data
 CAMERASOUND = None              # Camera noise to play when taking a photo.
 SCREEN_FONT = None
 FONT_COLOUR = None              #Colour to display updated text to subjects
+TWEET_TEXT = ""					# Default tweet text to use when tweeting pictures.
 
 def bgra_rgba(surface):
         img = PIL.Image.frombuffer('RGBA',(surface.get_width(),surface.get_height()),surface.get_data(),'raw','BGRA',0,1)
@@ -116,7 +119,7 @@ def layout(tplate,photos,outputDir):
     text_file.write(updateNode)
     text_file.close()
     SaveSVGToIMG(updateNode,outputDir,"Composite.png")
-
+    return os.path.join(outputDir,"Composite.png")
 
 # Screen methods
 
@@ -127,6 +130,7 @@ def SaveSVGToIMG(svg,outputDir,Filename):
     pygame.display.flip()
     pygame.time.delay(5000)
     SavePhoto(outputDir,IMG,Filename)
+     
 
 def PreenScreen(photoshoot,svg_data,Preentime=10):
     screenGeometry = template.findGeometry(svg_data)
@@ -187,7 +191,9 @@ def PreenScreen(photoshoot,svg_data,Preentime=10):
 
     # Cache this...
     tphotoshoot = svg_data = open(config.layout).read()
-    layout(tphotoshoot,photoshoot,SHOOTDIRECTORY )
+    composite = layout(tphotoshoot,photoshoot,SHOOTDIRECTORY )
+    print " Composite png located at "  +  composite
+    SocialMedia.tweetPhoto(TWEET_TEXT,composite)
     return "ATTRACT"
 
 def AttractScreen(AttractSVGdata):
@@ -260,6 +266,8 @@ def debugPrintConfiguration(config,photoshoot):
 if __name__ == '__main__':
     #Set up configuration
     config = configuration.ConfigFile("boothsettings.json")
+    SocialMedia = SendTweet.selfie_Tweet()
+    
     config.Load()
     debugPrintConfiguration(config,None)
     #Set up variables
@@ -269,6 +277,7 @@ if __name__ == '__main__':
     SCREEN_FONT_SIZE = config.Size
     SCREEN_FONT_COLOUR = config.FontColour
     PHOTOSOUNDEFFECT = config.shutterSound
+    TWEET_TEXT = config.TweetPhrase
     photoshoot = template.LoadPhotoShoot(config.layout)
     debugPrintConfiguration(config,photoshoot)
 
@@ -298,8 +307,8 @@ if __name__ == '__main__':
     cbackground = pygame.Surface((WIDTH,HEIGHT))
     cbackground = cbackground.convert()
     cbackground.fill((200,255,255))
-
-
+     
+    SocialMedia.tweet('Starting Selfietorium...')
 
     #screen = pygame.display.set_mode((WIDTH,HEIGHT),0,16)
 

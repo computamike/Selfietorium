@@ -35,7 +35,6 @@ class ConfigFile:
         self.FontColour = [0,0,0]
         self.ErrorFont = "MyUnderwood"
         self.ErrorFontSize = 20
-        self.TweetPhrase = "I just took this photo... #selfietorium_test"
 
     def Load(self):
         with open(self.inifile, mode='r') as f:
@@ -53,7 +52,6 @@ class ConfigFile:
             self.ErrorFontColour =  entry['ErrorFontColour']
             self.ErrorFont =  entry['ErrorFont']
             self.ErrorFontSize =  entry['ErrorFontSize']
-            self.TweetPhrase = entry['TweetPhrase']
             return entry
 
     def Save(self):
@@ -72,8 +70,6 @@ class ConfigFile:
         configuration['ErrorFontColour'] = self.ErrorFontColour
         configuration['ErrorFont'] = self.ErrorFont
         configuration['ErrorFontSize'] = self.ErrorFontSize
-        configuration['TweetPhrase'] = self.TweetPhrase
-        
 
         print self.inifile
         with open(self.inifile, mode='w') as f:
