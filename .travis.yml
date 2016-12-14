@@ -4,8 +4,12 @@ python:
 # uncomment and edit the following line if your project needs to run something other than `rake`:
 before_install:
   - sudo apt-get -qq update
+  - sudo apt-get install build-essential devscripts ubuntu-dev-tools debhelper dh_make diff patch cdbs
   - sudo apt-get install -y python-cairo python-lxml python-rsvg python-twitter
   
 install: true
  
-script: true
+script:
+ # Build the Source Package
+ debuild -S
+ 
