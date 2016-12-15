@@ -44,11 +44,11 @@ def bgra_rgba(surface):
 def load_svg_string(svg_data):
     svg = rsvg.Handle(data=svg_data)
     img_w, img_h = svg.props.width, svg.props.height
-    scaleFactorx = float(WIDTH) / float(img_w)
-    scaleFactory = float(HEIGHT) / float(img_h)
+    scale_factorx = float(WIDTH) / float(img_w)
+    scale_factory = float(HEIGHT) / float(img_h)
     surface = cairo.ImageSurface(cairo. FORMAT_ARGB32, WIDTH, HEIGHT)
     ctx = cairo.Context(surface)
-    ctx.scale(scaleFactorx, scaleFactory)
+    ctx.scale(scale_factorx, scale_factory)
     svg.render_cairo(ctx)
     return pygame.image.frombuffer(bgra_rgba(surface), (WIDTH, HEIGHT), 'RGBA')
 
@@ -57,11 +57,11 @@ def load_svg(filename):
     """Render SVG as Pygame image"""
     svg = rsvg.Handle(filename)
     img_w, img_h = svg.props.width, svg.props.height
-    scaleFactorx = float(WIDTH) / float(img_w)
-    scaleFactory = float(HEIGHT) / float(img_h)
+    scale_factorx = float(WIDTH) / float(img_w)
+    scale_factory = float(HEIGHT) / float(img_h)
     surface = cairo.ImageSurface(cairo. FORMAT_ARGB32, WIDTH, HEIGHT)
     ctx = cairo.Context(surface)
-    ctx.scale(scaleFactorx, scaleFactory)
+    ctx.scale(scale_factorx, scale_factory)
 
     svg.render_cairo(ctx)
     return pygame.image.frombuffer(bgra_rgba(surface), (WIDTH, HEIGHT), 'RGBA')
@@ -79,25 +79,25 @@ def load_svg(filename):
 #
 
 
-def picamGetPhoto(cam):
+def picam_get_photo(cam):
     img = cam.get_image()
     return img
 
 
-def convertSurfaceToImage(surface):
+def convert_surface_to_image(surface):
     pil = pygame.image.tostring(surface, "RGBA", False)
     img = PIL.Image.frombytes("RGBA", (640, 480), pil)
     return img
 
 
-def savePhoto(mydir, imgPhoto, filename):
+def savephoto(mydir, imgPhoto, filename):
     """Saves a photo as filename in the folder specified"""
     try:
         os.makedirs(mydir)
     except OSError, e:
         if e.errno != 17:
             raise     # This was not a "directory exist" error..
-    imgPhoto = convertSurfaceToImage(imgPhoto)
+    imgPhoto = convert_surface_to_image(imgPhoto)
     imgPhoto.save(os.path.join(mydir, filename), format="PNG")
 
 
@@ -105,7 +105,7 @@ def layout(tplate, photos, outputdir):
     """Layout template and save to Directory"""
     updateNode = tplate
     for shot in photos:
-        imgPhoto = convertSurfaceToImage(shot.photo)
+        imgPhoto = convert_surface_to_image(shot.photo)
         output = StringIO.StringIO()
         imgPhoto.save(output, format="PNG")
         contents = output.getvalue()
@@ -119,22 +119,22 @@ def layout(tplate, photos, outputdir):
     text_file = open(os.path.join(outputdir, "Output.svg"), "w")
     text_file.write(updateNode)
     text_file.close()
-    SaveSVGToIMG(updateNode, outputdir, "Composite.png")
+    save_svg_to_img(updateNode, outputdir, "Composite.png")
     return os.path.join(outputdir, "Composite.png")
 
 # Screen methods
 
 
-def SaveSVGToIMG(svg, outputdir, Filename):
+def save_svg_to_img(svg, outputdir, Filename):
     IMG = load_svg_string(svg)
     screen.blit(cbackground, (0, 0))
     screen.blit(IMG, (0, 0))
     pygame.display.flip()
     pygame.time.delay(5000)
-    savePhoto(outputdir, IMG, Filename)
+    savephoto(outputdir, IMG, Filename)
 
 
-def PreenScreen(photoshoot, svg_data, Preentime=10):
+def preen_screen(photoshoot, svg_data, Preentime=10):
     screenGeometry = template.findGeometry(svg_data)
     scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
     scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
@@ -157,7 +157,7 @@ def PreenScreen(photoshoot, svg_data, Preentime=10):
     promptBackground = prompt.attrib['style']
 
     for shot in photoshoot:
-        photo = picamGetPhoto(cam)
+        photo = picam_get_photo(cam)
         my_font = pygame.font.SysFont(SCREEN_FONT, SCREEN_FONT_SIZE)
         my_string = str(shot.title) or config.prePhotoPhrase
         my_rect = pygame.Rect((promptx, prompty, promptWidth, promptHeight))
@@ -168,7 +168,7 @@ def PreenScreen(photoshoot, svg_data, Preentime=10):
 
         preentimeSpent = (end - start).seconds
         while Preentime - preentimeSpent > 0:
-            photo = picamGetPhoto(cam)
+            photo = picam_get_photo(cam)
             end = datetime.datetime.now()
             preentimeSpent = (end - start).seconds
             if Preentime - preentimeSpent == 0:
@@ -186,7 +186,7 @@ def PreenScreen(photoshoot, svg_data, Preentime=10):
             pygame.time.delay(25)
         CAMERASOUND.play()
         shot.photo = photo
-        savePhoto(SHOOTDIRECTORY, photo, shot.imageID + ".png")
+        savephoto(SHOOTDIRECTORY, photo, shot.imageID + ".png")
         pygame.time.delay(500)
         screen.blit(background, (0, 0))
         screen.blit(pygame.transform.scale(photo, (WIDTH, HEIGHT)), (0, 0))
@@ -201,14 +201,14 @@ def PreenScreen(photoshoot, svg_data, Preentime=10):
     return "ATTRACT"
 
 
-def attractScreen(AttractSVGdata):
+def attract_screen(AttractSVGdata):
     IMG = load_svg_string(AttractSVGdata)
     screen.blit(background, (0, 0))
     screen.blit(IMG, (0, 0))
     pygame.display.flip()
 
 
-def ErrorScreen(ErrorSVGdata, xception):
+def error_screen(ErrorSVGdata, xception):
 
     my_font = pygame.font.SysFont(ERROR_FONT, SCREEN_FONT_SIZE)
     my_string = "an error has occured"
@@ -335,12 +335,12 @@ if __name__ == '__main__':
                         #ErrorScreen(SCREEN_ERROR)
                         raise ValueError('A very specific bad thing happened')
                 if state == "ATTRACT":
-                    attractScreen(SCREEN_ATTRACT)
+                    attract_screen(SCREEN_ATTRACT)
                 if state == "PREEN":
-                    state = PreenScreen(photoshoot, SCREEN_PREEN,
+                    state = preen_screen(photoshoot, SCREEN_PREEN,
                                         config.preenTime)
         except Exception as e:
-            ErrorScreen(SCREEN_ERROR, e)
+            error_screen(SCREEN_ERROR, e)
 
 
     # c.tick(1)
