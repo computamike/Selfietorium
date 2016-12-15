@@ -1,5 +1,12 @@
 dist: trusty
 sudo: required
+
+addons:
+  sonarqube:
+    token:
+      secure: '$SONARQUBE_API_KEY'
+
+
 language: python
 python:
  - "2.7"
@@ -15,6 +22,7 @@ install: true
 script:
  # Build the Source Package
  #debuild -S
+   - sonar-scanner
    - sudo dpkg-buildpackage -us -uc 
 before_deploy:
   cp ../python-selfietorium_1_all.deb python-selfietorium_1_all.deb
@@ -26,3 +34,4 @@ deploy:
   on:
     branch: master
     tags: true
+    #ff334adb67d60a37172dedd1b8d79b97f5b4b965
