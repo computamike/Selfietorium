@@ -18,7 +18,7 @@ script:
    - sudo dpkg-buildpackage -us -uc 
 deploy:
   provider: releases
-    pi_key: '$GITHUB_API_KEY'
+    api_key: '$GITHUB_API_KEY'
   file: '../python-selfietorium_1_all.deb'
   skip_cleanup: true
   on:
