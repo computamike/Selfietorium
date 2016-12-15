@@ -16,6 +16,8 @@ script:
  # Build the Source Package
  #debuild -S
    - sudo dpkg-buildpackage -us -uc 
+before_deploy:
+  cp ../python-selfietorium_1_all.deb python-selfietorium_1_all.deb
 deploy:
   provider: releases
   api_key: '$GITHUB_API_KEY'
