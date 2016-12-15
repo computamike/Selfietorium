@@ -22,4 +22,5 @@ deploy:
   file: '../python-selfietorium_1_all.deb'
   skip_cleanup: true
   on:
-    tags
+    branch: master
+    tags: true
