@@ -21,7 +21,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key: '$GITHUB_API_KEY'
-  file: '../python-selfietorium_1_all.deb'
+  file: 'python-selfietorium_1_all.deb'
   skip_cleanup: true
   on:
     branch: master
