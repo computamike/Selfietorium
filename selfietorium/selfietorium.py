@@ -90,20 +90,20 @@ def convert_surface_to_image(surface):
     return img
 
 
-def savephoto(mydir, imgPhoto, filename):
+def savephoto(mydir, img_photo, filename):
     """Saves a photo as filename in the folder specified"""
     try:
         os.makedirs(mydir)
     except OSError, e:
         if e.errno != 17:
             raise     # This was not a "directory exist" error..
-    imgPhoto = convert_surface_to_image(imgPhoto)
-    imgPhoto.save(os.path.join(mydir, filename), format="PNG")
+    img_photo = convert_surface_to_image(img_photo)
+    img_photo.save(os.path.join(mydir, filename), format="PNG")
 
 
 def layout(tplate, photos, outputdir):
     """Layout template and save to Directory"""
-    updateNode = tplate
+    update_node = tplate
     for shot in photos:
         imgPhoto = convert_surface_to_image(shot.photo)
         output = StringIO.StringIO()
@@ -113,28 +113,28 @@ def layout(tplate, photos, outputdir):
         photoB64 = pygame.image.tostring(shot.photo, "RGB")
         photoB64 = contents
         base64data = base64.b64encode(contents)
-        strB64 = "data:image/png;base64," + base64data
-        updateNode = template.updateNodeAttrib(updateNode, shot.imageID,
-            "{http://www.w3.org/1999/xlink}href", strB64)
+        str_b64 = "data:image/png;base64," + base64data
+        update_node = template.updateNodeAttrib(update_node, shot.imageID,
+            "{http://www.w3.org/1999/xlink}href", str_b64)
     text_file = open(os.path.join(outputdir, "Output.svg"), "w")
-    text_file.write(updateNode)
+    text_file.write(update_node)
     text_file.close()
-    save_svg_to_img(updateNode, outputdir, "Composite.png")
+    save_svg_to_img(update_node, outputdir, "Composite.png")
     return os.path.join(outputdir, "Composite.png")
 
 # Screen methods
 
 
-def save_svg_to_img(svg, outputdir, Filename):
+def save_svg_to_img(svg, outputdir, filename):
     IMG = load_svg_string(svg)
     screen.blit(cbackground, (0, 0))
     screen.blit(IMG, (0, 0))
     pygame.display.flip()
     pygame.time.delay(5000)
-    savephoto(outputdir, IMG, Filename)
+    savephoto(outputdir, IMG, filename)
 
 
-def preen_screen(photoshoot, svg_data, Preentime=10):
+def preen_screen(photoshoot, svg_data, preentime=10):
     screenGeometry = template.findGeometry(svg_data)
     scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
     scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
@@ -167,14 +167,14 @@ def preen_screen(photoshoot, svg_data, Preentime=10):
         end = datetime.datetime.now()
 
         preentimeSpent = (end - start).seconds
-        while Preentime - preentimeSpent > 0:
+        while preentime - preentimeSpent > 0:
             photo = picam_get_photo(cam)
             end = datetime.datetime.now()
             preentimeSpent = (end - start).seconds
-            if Preentime - preentimeSpent == 0:
+            if preentime - preentimeSpent == 0:
                 break
             svg_data = template.updateNode(svg_data, 'countDown',
-                                               str(Preentime - preentimeSpent))
+                                               str(preentime - preentimeSpent))
             IMG = load_svg_string(svg_data)
             screen.blit(background, (0, 0))
             screen.blit(IMG, (0, 0))
@@ -196,29 +196,29 @@ def preen_screen(photoshoot, svg_data, Preentime=10):
     # Cache this...
     tphotoshoot = svg_data = open(config.layout).read()
     composite = layout(tphotoshoot, photoshoot, SHOOTDIRECTORY)
-    print " Composite png located at " + composite
+    print ('Composite png located at ' + composite)
     SocialMedia.tweetPhoto(TWEET_TEXT, composite)
     return "ATTRACT"
 
 
-def attract_screen(AttractSVGdata):
-    IMG = load_svg_string(AttractSVGdata)
+def attract_screen(attract_svg_data):
+    IMG = load_svg_string(attract_svg_data)
     screen.blit(background, (0, 0))
     screen.blit(IMG, (0, 0))
     pygame.display.flip()
 
 
-def error_screen(ErrorSVGdata, xception):
+def error_screen(error_svg_data, xception):
 
     my_font = pygame.font.SysFont(ERROR_FONT, SCREEN_FONT_SIZE)
     my_string = "an error has occured"
-    screenGeometry = template.findGeometry(ErrorSVGdata)
+    screenGeometry = template.findGeometry(error_svg_data)
     scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
     scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
-    prompt = template.findNode(ErrorSVGdata, '//svg:rect[@id="ErrorMessage"]')
-    ErrorSVGdata = template.deleteNode(ErrorSVGdata, '//svg:rect[@id="ErrorMessage"]')
+    prompt = template.findNode(error_svg_data, '//svg:rect[@id="ErrorMessage"]')
+    error_svg_data = template.deleteNode(error_svg_data, '//svg:rect[@id="ErrorMessage"]')
 
-    IMG = load_svg_string(ErrorSVGdata)
+    IMG = load_svg_string(error_svg_data)
 
     promptx = int(math.floor(float(prompt.attrib['x']) * scaleWidth))
     prompty = int(math.floor(float(prompt.attrib['y']) * scaleHeight))
@@ -231,7 +231,7 @@ def error_screen(ErrorSVGdata, xception):
     screen.blit(prompt, (promptx, prompty))
     pygame.display.flip()
     pygame.time.delay(1000)
-    print "Error :"
+    print ('Error :')
     exc_type, exc_value, exc_traceback = sys.exc_info()
     traceback_template = '''Traceback (most recent call last):
       File "%(filename)s", line %(lineno)s, in %(name)s %(type)s: %(message)s\n'''
@@ -242,31 +242,31 @@ def error_screen(ErrorSVGdata, xception):
                          'type'    : exc_type.__name__,
                          'message' : exc_value.message, # or see traceback._some_str()
                         }
-    print
-    print traceback.format_exc()
-    print
-    print traceback_template % traceback_details
-    print
+    print()
+    print(traceback.format_exc())
+    print()
+    print(traceback_template % traceback_details)
+    print()
 
 
-def debugPrintConfiguration(config, photoshoot):
+def debug_print_configuration(config, photoshoot):
     """Prints configuration to console."""
-    print "Starting selfietorium..."
-    print "------------------------"
-    print
-    print "Configuration :"
-    print
-    print "Template        : " + config.layout
-    print "Pre-PhotoPhrase : " + config.prePhotoPhrase
-    print "Preen Time      : " + str(config.preenTime) + " seconds."
-    print "Shutter Sound   : " + config.shutterSound
-    print "Photo store     : " + config.photostore
-    print "Pre-PhotoPhrase : " + config.prePhotoPhrase
-    print "Update Font     : " + config.Font
-    print "Update Font Size: " + str(config.Size)
-    print "Update Font Colour: " + str(config.FontColour)
-    print
-    print
+    print("Starting selfietorium...")
+    print("------------------------")
+    print()
+    print("Configuration :")
+    print()
+    print("Template        : " + config.layout)
+    print("Pre-PhotoPhrase : " + config.prePhotoPhrase)
+    print("Preen Time      : " + str(config.preenTime) + " seconds.")
+    print("Shutter Sound   : " + config.shutterSound)
+    print("Photo store     : " + config.photostore)
+    print("Pre-PhotoPhrase : " + config.prePhotoPhrase)
+    print("Update Font     : " + config.Font)
+    print("Update Font Size: " + str(config.Size))
+    print("Update Font Colour: " + str(config.FontColour))
+    print()
+    print()
 
 
 if __name__ == '__main__':
@@ -275,7 +275,7 @@ if __name__ == '__main__':
     SocialMedia = SendTweet.selfie_Tweet()
 
     config.Load()
-    debugPrintConfiguration(config, None)
+    debug_print_configuration(config, None)
     #Set up variables
     SHOOTPHOTOSTORE = config.photostore
     SHOOTDIRECTORY = os.path.join(SHOOTPHOTOSTORE,
@@ -286,7 +286,7 @@ if __name__ == '__main__':
     PHOTOSOUNDEFFECT = config.shutterSound
     TWEET_TEXT = config.TweetPhrase
     photoshoot = template.LoadPhotoShoot(config.layout)
-    debugPrintConfiguration(config, photoshoot)
+    debug_print_configuration(config, photoshoot)
 
     #Set Up Screens
     SCREEN_ATTRACT = open('Screens/Attract.svg').read()
@@ -316,8 +316,6 @@ if __name__ == '__main__':
 
     SocialMedia.tweet('Starting Selfietorium...')
 
-    #screen = pygame.display.set_mode((WIDTH,HEIGHT),0,16)
-
     c = pygame.time.Clock()
     while True:
         try:
@@ -326,12 +324,12 @@ if __name__ == '__main__':
                     if event.key == pygame.K_q:
                         pygame.quit()
                         sys.exit()
-                    if event.key == pygame.K_p:
+                    elif event.key == pygame.K_p:
                         if state == "ATTRACT":
                             state = "PREEN"
-                    if event.key == pygame.K_s:
+                    elif event.key == pygame.K_s:
                         CAMERASOUND.play()
-                    if event.key == pygame.K_e:
+                    elif event.key == pygame.K_e:
                         #ErrorScreen(SCREEN_ERROR)
                         raise ValueError('A very specific bad thing happened')
                 if state == "ATTRACT":
