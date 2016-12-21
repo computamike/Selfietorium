@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/computamike/Selfietorium.svg?branch=master)](https://travis-ci.org/computamike/Selfietorium)
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7efa98acbdc2410ba7e01d5d56c987e5)](https://www.codacy.com/app/mike_18/Selfietorium?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=computamike/Selfietorium&amp;utm_campaign=Badge_Grade)
+
 # Selfietorium
 A python based photo booth thing, being developed for a wedding November 2017 - will be running using raspberry pi
 
