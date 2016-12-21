@@ -1,5 +1,5 @@
-selfietorium (1-1) unstable; urgency=medium
+selfietorium (1) unstable; urgency=medium
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial Release.
 
- -- Mike <mike@unknown>  Sat, 10 Dec 2016 22:30:13 +0000
+ -- Mike Hingley <computa_mike@hotmail.com>  Wed, 14 Dec 2016 18:41:17 +0000

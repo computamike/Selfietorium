@@ -1,0 +1,13 @@
+README.rst
+setup.py
+libselfietorium/SendTweet.py
+libselfietorium/__init__.py
+libselfietorium/configuration.py
+libselfietorium/pygameTextRectangle.py
+libselfietorium/template.py
+selfietorium.egg-info/PKG-INFO
+selfietorium.egg-info/SOURCES.txt
+selfietorium.egg-info/dependency_links.txt
+selfietorium.egg-info/entry_points.txt
+selfietorium.egg-info/requires.txt
+selfietorium.egg-info/top_level.txt

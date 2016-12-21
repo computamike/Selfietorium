@@ -1,10 +1,10 @@
 Source: selfietorium
 Section: unknown
 Priority: optional
-Maintainer: Mike <mike@unknown>
+Maintainer: Mike Hingley<computa_mike@hotmail.com>
 Build-Depends: debhelper (>=9),dh-python,python-all (>= 2.6.6-3~),python-setuptools,python3-all,python3-setuptools
 Standards-Version: 3.9.6
-Homepage: <insert the upstream URL, if relevant>
+Homepage: https://github.com/TitaniumBunker/Selfietorium
 X-Python-Version: >= 2.6
 X-Python3-Version: >= 3.2
 #Vcs-Git: git://anonscm.debian.org/collab-maint/selfietorium.git
@@ -12,27 +12,27 @@ X-Python3-Version: >= 3.2
 
 Package: python-selfietorium
 Architecture: all
-Depends: ${python:Depends}, ${misc:Depends}
+Depends: ${python:Depends},python-rsvg, python-twitter, ${misc:Depends}
 Suggests: python-selfietorium-doc
 Description: <insert up to 60 chars description> (Python 2)
  <insert long description, indented with spaces>
  .
  This package installs the library for Python 2.
 
-Package: python3-selfietorium
-Architecture: all
-Depends: ${python3:Depends}, ${misc:Depends}
-Suggests: python-selfietorium-doc
-Description: <insert up to 60 chars description> (Python 3)
- <insert long description, indented with spaces>
- .
- This package installs the library for Python 3.
-
-Package: python-selfietorium-doc
-Architecture: all
-Section: doc
-Depends: ${sphinxdoc:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description> (common documentation)
- <insert long description, indented with spaces>
- .
- This is the common documentation package.
+#Package: python3-selfietorium
+#Architecture: all
+#Depends: ${python3:Depends}, ${misc:Depends}
+#Suggests: python-selfietorium-doc
+#Description: <insert up to 60 chars description> (Python 3)
+# <insert long description, indented with spaces>
+# .
+# This package installs the library for Python 3.
+#
+#Package: python-selfietorium-doc
+#Architecture: all
+#Section: doc
+#Depends: ${sphinxdoc:Depends}, ${misc:Depends}
+#Description: selfietorium documentation  (common documentation)
+# <insert long description, indented with spaces>
+# .
+# This is the common documentation package.

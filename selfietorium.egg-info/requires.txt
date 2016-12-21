@@ -1,0 +1,8 @@
+lxml
+pygame
+
+[dev]
+check-manifest
+
+[test]
+coverage
