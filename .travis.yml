@@ -8,9 +8,11 @@ addons:
 
 
 language: python
+
 python:
  - "2.7"
 # uncomment and edit the following line if your project needs to run something other than `rake`:
+
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y build-essential devscripts ubuntu-dev-tools debhelper dh-make diffutils patch cdbs
@@ -20,12 +22,12 @@ before_install:
 install: true
  
 script:
- # Build the Source Package
- #debuild -S
    - sonar-scanner
    - sudo dpkg-buildpackage -us -uc 
+
 before_deploy:
   cp ../python-selfietorium_1_all.deb python-selfietorium_1_all.deb
+
 deploy:
   provider: releases
   api_key: '$GITHUB_API_KEY'
@@ -34,4 +36,3 @@ deploy:
   on:
     branch: master
     tags: true
-    #ff334adb67d60a37172dedd1b8d79b97f5b4b965
