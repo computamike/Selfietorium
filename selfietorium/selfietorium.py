@@ -1,12 +1,9 @@
 #!/usr/bin/python
-from lxml import etree as ET
-from lxml.etree import QName
-import array
+import importlib
 import math
 import cairo
 import pygame
 import pygame.display
-import pygame.camera
 import rsvg
 import PIL.Image
 import sys
@@ -32,7 +29,7 @@ SCREEN_FONT = None
 FONT_COLOUR = None              # Colour to display updated text to subjects
 TWEET_TEXT = ""                 # Default tweet text to use when
                                 # tweeting pictures.
-
+mymethod = None
 
 def bgra_rgba(surface):
         img = PIL.Image.frombuffer('RGBA', (surface.get_width(),
@@ -79,9 +76,9 @@ def load_svg(filename):
 #
 
 
-def picam_get_photo(cam):
-    img = cam.get_image()
-    return img
+#def picam_get_photo(cam):
+#    img = cam.get_image()
+#    return img
 
 
 def convert_surface_to_image(surface):
@@ -135,6 +132,8 @@ def save_svg_to_img(svg, outputdir, filename):
 
 
 def preen_screen(photoshoot, svg_data, preentime=10):
+    SHOOTDIRECTORY = os.path.join(SHOOTPHOTOSTORE,
+                         datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     screenGeometry = template.findGeometry(svg_data)
     scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
     scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
@@ -157,7 +156,8 @@ def preen_screen(photoshoot, svg_data, preentime=10):
     promptBackground = prompt.attrib['style']
 
     for shot in photoshoot:
-        photo = picam_get_photo(cam)
+        #photo = mymethod.GetPhoto()
+        #photo = picam_get_photo(cam) # we might not need this one.
         my_font = pygame.font.SysFont(SCREEN_FONT, SCREEN_FONT_SIZE)
         my_string = str(shot.title) or config.prePhotoPhrase
         my_rect = pygame.Rect((promptx, prompty, promptWidth, promptHeight))
@@ -168,7 +168,8 @@ def preen_screen(photoshoot, svg_data, preentime=10):
 
         preentimeSpent = (end - start).seconds
         while preentime - preentimeSpent > 0:
-            photo = picam_get_photo(cam)
+            photo = mymethod.GetPhoto()
+            #photo = picam_get_photo(cam)
             end = datetime.datetime.now()
             preentimeSpent = (end - start).seconds
             if preentime - preentimeSpent == 0:
@@ -196,7 +197,7 @@ def preen_screen(photoshoot, svg_data, preentime=10):
     # Cache this...
     tphotoshoot = svg_data = open(config.layout).read()
     composite = layout(tphotoshoot, photoshoot, SHOOTDIRECTORY)
-    print ('Composite png located at ' + composite)
+    print('Composite png located at ' + composite)
     SocialMedia.tweetPhoto(TWEET_TEXT, composite)
     return "ATTRACT"
 
@@ -296,13 +297,13 @@ if __name__ == '__main__':
     ERROR_FONT_SIZE = config.ErrorFontSize
     ERROR_FONT_COLOUR = config.ErrorFontColour
 
-    pygame.camera.init()
-    cam = pygame.camera.Camera(pygame.camera.list_cameras()[0])
-    cam.start()
+    CamerObject = importlib.import_module("libselfietorium.USBCamera")
+    mymethod = getattr(importlib.import_module("libselfietorium.USBCamera"), "USBCamera")()
     state = "ATTRACT"
     pygame.init()
     pygame.mixer.init(48000, -16, 1, 1024)
     CAMERASOUND = pygame.mixer.Sound(PHOTOSOUNDEFFECT)
+
     #pygame.display.set_mode((WIDTH,HEIGHT),0,16)
     screen = pygame.display.set_mode((640, 480))
     pygame.mouse.set_visible(False)

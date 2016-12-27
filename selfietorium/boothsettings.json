@@ -1,0 +1,24 @@
+{
+  "prePhotoPhrase": "Smile",
+  "shutterSound": "Assets/62491__benboncan__dslr-click.wav",
+  "layout": "Templates/Template1.svg",
+  "FontColour": [
+    125,
+    125,
+    125
+  ],
+  "sheetspercartidge": 0,
+  "photosTaken": 0,
+  "preenTime": 5,
+  "Font": "CF Anarchy",
+  "PhotoStore": "Photos/",
+  "Size": 15,
+  "ErrorFontSize": 15,
+  "ErrorFont": "My Underwood",
+  "ErrorFontColour": [
+      0,
+      0,
+      0
+    ],
+  "TweetPhrase" :  "I just took this photo... #selfietorium_test"
+}
