@@ -28,5 +28,4 @@ if __name__ == '__main__':
     # Add sample Code here
     print "hello - I am a print example"
     c = Printer('PDF')
-    c.print_photo('output.svg','test')
-    pass
+    c.print_photo('output.svg', 'test')

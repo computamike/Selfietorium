@@ -10,7 +10,6 @@ from lxml import etree as ET
 
 class PhotoShoot(object):
     """Class that describes a photoshoot."""
-    pass
 
     def __str__(self):
         return '|' + str(self.imageID) + '|' + str(self.title)  +'|' + str(self.photo)  +'|'
