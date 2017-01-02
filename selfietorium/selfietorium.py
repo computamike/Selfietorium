@@ -107,8 +107,6 @@ def layout(tplate, photos, outputdir):
         imgPhoto.save(output, format="PNG")
         contents = output.getvalue()
         output.close()
-        photoB64 = pygame.image.tostring(shot.photo, "RGB")
-        photoB64 = contents
         base64data = base64.b64encode(contents)
         str_b64 = "data:image/png;base64," + base64data
         update_node = template.updateNodeAttrib(update_node, shot.imageID,
@@ -146,14 +144,12 @@ def preen_screen(photoshoot, svg_data, preentime=10):
     prompt = template.findNode(svg_data, '//svg:rect[@id="prompt"]')
     svg_data = template.deleteNode(svg_data, '//svg:rect[@id="prompt"]')
 
-    promptfont = template.findNode(svg_data, '//svg:text[@id="promptfont"]')
     svg_data = template.deleteNode(svg_data, '//svg:text[@id="promptfont"]')
 
     promptx = int(math.floor(float(prompt.attrib['x']) * scaleWidth))
     prompty = int(math.floor(float(prompt.attrib['y']) * scaleHeight))
     promptWidth = int(math.ceil(float(prompt.attrib['width']) * scaleWidth))
     promptHeight = int(math.ceil(float(prompt.attrib['height']) * scaleHeight))
-    promptBackground = prompt.attrib['style']
 
     for shot in photoshoot:
         #photo = mymethod.GetPhoto()
@@ -199,7 +195,7 @@ def preen_screen(photoshoot, svg_data, preentime=10):
     composite = layout(tphotoshoot, photoshoot, SHOOTDIRECTORY)
     print('Composite png located at ' + composite)
     SocialMedia.tweetPhoto(TWEET_TEXT, composite)
-    PRINTER.print_photo(composite,'test-' + ShootTime)
+    PRINTER.print_photo(composite, 'test-' + ShootTime)
     #//c.print_photo('output.svg','test')
     return "ATTRACT"
 

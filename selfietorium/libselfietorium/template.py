@@ -6,11 +6,12 @@ Tempaltes for selfietorium are stored as SVG graphic files.
 This library provides functionality for reading and updating templates.
 """
 from lxml import etree as ET
-from lxml.etree import QName
+
 
 class PhotoShoot(object):
     """Class that describes a photoshoot."""
     pass
+
     def __str__(self):
         return '|' + str(self.imageID) + '|' + str(self.title)  +'|' + str(self.photo)  +'|'
 
@@ -19,18 +20,18 @@ class PhotoShoot(object):
 # CONSTANTS
 #
 ns = {
-    'dc'    : 'http://purl.org/dc/elements/1.1/',
-    'cc'    : 'http://creativecommons.org/ns#',
-    'rdf'   : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-    'svg'   : 'http://www.w3.org/2000/svg',
-    'xlink' : 'http://www.w3.org/1999/xlink',
-    'sodipodi':'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
-    'inkscape' : 'http://www.inkscape.org/namespaces/inkscape'
+          'dc': 'http://purl.org/dc/elements/1.1/',
+          'cc': 'http://creativecommons.org/ns#',
+         'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+         'svg': 'http://www.w3.org/2000/svg',
+       'xlink': 'http://www.w3.org/1999/xlink',
+    'sodipodi': 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
+    'inkscape': 'http://www.inkscape.org/namespaces/inkscape'
     }
 """Namespaces used by SVG files (created by Inkscape)."""
 
 
-def updateNode(svg_data,element_id,value):
+def updateNode(svg_data, element_id, value):
     """
     Finds a Text Node based on ID, and sets its value.
     Args:
@@ -46,7 +47,8 @@ def updateNode(svg_data,element_id,value):
     xmlstr = ET.tostring(tree)
     return xmlstr
 
-def updateNodeAttrib(svg_data, element_id, attrib,value):
+
+def updateNodeAttrib(svg_data, element_id, attrib, value):
     """
     Finds a Text Node based on ID, and sets its value.
     Args:
@@ -137,12 +139,12 @@ def LoadPhotoShoot(templateFile):
     order.
     """
     tree = ET.parse(templateFile)
-    root = tree.getroot()
+    #root = tree.getroot()
     # First - lets set up some SVG namespaces
     p = tree.xpath('/svg:svg/svg:g/svg:image', namespaces=ns)
     simpleList = []
     for child in p:
-        Image = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']',namespaces=ns)
+        #Image = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']',namespaces=ns)
         title = tree.xpath('/svg:svg/svg:g/svg:image[@id=\'' + child.attrib['id'] + '\']/svg:title', namespaces=ns)
         x = PhotoShoot()
         x.imageID = child.attrib['id']
