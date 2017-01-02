@@ -132,8 +132,8 @@ def save_svg_to_img(svg, outputdir, filename):
 
 
 def preen_screen(photoshoot, svg_data, preentime=10):
-    SHOOTDIRECTORY = os.path.join(SHOOTPHOTOSTORE,
-                         datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+    ShootTime = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    SHOOTDIRECTORY = os.path.join(SHOOTPHOTOSTORE, ShootTime)
     screenGeometry = template.findGeometry(svg_data)
     scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
     scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
@@ -199,6 +199,8 @@ def preen_screen(photoshoot, svg_data, preentime=10):
     composite = layout(tphotoshoot, photoshoot, SHOOTDIRECTORY)
     print('Composite png located at ' + composite)
     SocialMedia.tweetPhoto(TWEET_TEXT, composite)
+    PRINTER.print_photo(composite,'test-' + ShootTime)
+    #//c.print_photo('output.svg','test')
     return "ATTRACT"
 
 
@@ -266,6 +268,7 @@ def debug_print_configuration(config, photoshoot):
     print("Update Font     : " + config.Font)
     print("Update Font Size: " + str(config.Size))
     print("Update Font Colour: " + str(config.FontColour))
+    print("Printer Name     :" + str(config.PrinterName))
     print()
     print()
 
@@ -288,6 +291,9 @@ if __name__ == '__main__':
     TWEET_TEXT = config.TweetPhrase
     photoshoot = template.LoadPhotoShoot(config.layout)
     debug_print_configuration(config, photoshoot)
+    PRINTERNAME = str(config.PrinterName)
+    PRINTER = getattr(importlib.import_module("libselfietorium.Printer"), "Printer")(PRINTERNAME)
+
 
     #Set Up Screens
     SCREEN_ATTRACT = open('Screens/Attract.svg').read()
@@ -298,7 +304,10 @@ if __name__ == '__main__':
     ERROR_FONT_COLOUR = config.ErrorFontColour
 
     CamerObject = importlib.import_module("libselfietorium.USBCamera")
+
     mymethod = getattr(importlib.import_module("libselfietorium.USBCamera"), "USBCamera")()
+
+
     state = "ATTRACT"
     pygame.init()
     pygame.mixer.init(48000, -16, 1, 1024)

@@ -17,9 +17,11 @@ Example:
 """
 import json
 
+
 class ConfigFile:
-    """A Configuration object - this object serialises / deserialises data to JSON format."""
-    def __init__(self,iniFile):
+    """A Configuration object - this object serialises / deserialises data to
+    JSON format."""
+    def __init__(self, iniFile):
         """Constructor for this object."""
         self.inifile = iniFile
         self.layout = '../6x4.Template1.-.Linked.Files.svg'
@@ -28,42 +30,44 @@ class ConfigFile:
         self.preenTime = 5
         self.Font = "MyUnderwood"
         self.Size = 30
-        self.FontColour = [125,125,125]
+        self.FontColour = [125, 125, 125]
         self.photosTaken = 0
         self.sheetspercartidge = 0
         self.shutterSound = "62491__benboncan__dslr-click.wav"
-        self.FontColour = [0,0,0]
+        self.FontColour = [0, 0, 0]
         self.ErrorFont = "MyUnderwood"
         self.ErrorFontSize = 20
         self.TweetPhrase = "I just took this photo... #selfietorium_test"
+        self.PrinterName = "PDF"
 
     def Load(self):
         with open(self.inifile, mode='r') as f:
             entry = json.load(f)
             self.layout = entry['layout']
             self.prePhotoPhrase = entry['prePhotoPhrase']
-            self.photostore =entry['PhotoStore']
+            self.photostore = entry['PhotoStore']
             self.preenTime = entry['preenTime']
             self.photosTaken = entry['photosTaken']
             self.sheetspercartidge = entry['sheetspercartidge']
             self.shutterSound = entry['shutterSound']
-            self.Font =  entry['Font']
-            self.Size =  entry['Size']
-            self.FontColour =  entry['FontColour']
-            self.ErrorFontColour =  entry['ErrorFontColour']
-            self.ErrorFont =  entry['ErrorFont']
-            self.ErrorFontSize =  entry['ErrorFontSize']
+            self.Font = entry['Font']
+            self.Size = entry['Size']
+            self.FontColour = entry['FontColour']
+            self.ErrorFontColour = entry['ErrorFontColour']
+            self.ErrorFont = entry['ErrorFont']
+            self.ErrorFontSize = entry['ErrorFontSize']
             self.TweetPhrase = entry['TweetPhrase']
+            self.PrinterName = entry['PrinterName']
             return entry
 
     def Save(self):
         """Save data to config file."""
-        configuration={}
+        configuration = {}
         configuration['layout'] = self.layout
-        configuration['prePhotoPhrase']=self.prePhotoPhrase
-        configuration['PhotoStore']=self.photostore
-        configuration['preenTime']=self.preenTime
-        configuration['photosTaken']=self.photosTaken
+        configuration['prePhotoPhrase'] = self.prePhotoPhrase
+        configuration['PhotoStore'] = self.photostore
+        configuration['preenTime'] = self.preenTime
+        configuration['photosTaken'] = self.photosTaken
         configuration['sheetspercartidge'] = self.sheetspercartidge
         configuration['shutterSound'] = self.shutterSound
         configuration['FontColour'] = self.FontColour
@@ -73,11 +77,10 @@ class ConfigFile:
         configuration['ErrorFont'] = self.ErrorFont
         configuration['ErrorFontSize'] = self.ErrorFontSize
         configuration['TweetPhrase'] = self.TweetPhrase
-        
-
+        configuration['PrinterName'] = self.PrinterName
         print self.inifile
         with open(self.inifile, mode='w') as f:
-            json.dump(configuration,f, indent=2)
+            json.dump(configuration, f, indent=2)
 
 
 if __name__ == '__main__':
