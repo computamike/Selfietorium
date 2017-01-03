@@ -39,7 +39,11 @@ class ConfigFile:
         self.ErrorFontSize = 20
         self.TweetPhrase = "I just took this photo... #selfietorium_test"
         self.PrinterName = "PDF"
-
+        self.ACCESS_TOKEN = "<REPLACE THIS WITH YOUR ACCESS TOKEN>"
+        self.ACCESS_SECRET = "<REPLACE THIS WITH YOUR ACCESS TOKEN SECRET>"
+        self.CONSUMER_KEY = "<REPLACE THIS WITH YOUR API KEY>"
+        self.CONSUMER_SECRET = "<REPLCE THIS WITHN YOUR API SECRE>"
+        
     def Load(self):
         with open(self.inifile, mode='r') as f:
             entry = json.load(f)
@@ -58,6 +62,10 @@ class ConfigFile:
             self.ErrorFontSize = entry['ErrorFontSize']
             self.TweetPhrase = entry['TweetPhrase']
             self.PrinterName = entry['PrinterName']
+            self.ACCESS_TOKEN = entry['ACCESS_TOKEN']
+            self.ACCESS_SECRET = entry['ACCESS_SECRET']
+            self.CONSUMER_KEY = entry['CONSUMER_KEY']
+            self.CONSUMER_SECRET = entry['CONSUMER_SECRET']
             return entry
 
     def Save(self):
@@ -78,6 +86,11 @@ class ConfigFile:
         configuration['ErrorFontSize'] = self.ErrorFontSize
         configuration['TweetPhrase'] = self.TweetPhrase
         configuration['PrinterName'] = self.PrinterName
+        configuration['ACCESS_TOKEN'] = self.ACCESS_TOKEN
+        configuration['ACCESS_SECRET'] = self.ACCESS_SECRET
+        configuration['CONSUMER_KEY'] = self.CONSUMER_KEY
+        configuration['CONSUMER_SECRET'] = self.CONSUMER_SECRET
+        
         print self.inifile
         with open(self.inifile, mode='w') as f:
             json.dump(configuration, f, indent=2)
