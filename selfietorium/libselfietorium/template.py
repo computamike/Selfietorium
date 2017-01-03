@@ -49,7 +49,7 @@ def updateNode(svg_data, element_id, value):
 
 def updateNodeAttrib(svg_data, element_id, attrib, value):
     """
-    Finds a Text Node based on ID, and sets its value.
+    Finds a Node based on ID, and sets its value.
     Args:
         svg_data : String containing template data
         element_id       : id of element to find

@@ -129,6 +129,23 @@ def save_svg_to_img(svg, outputdir, filename):
     savephoto(outputdir, IMG, filename)
 
 
+def twitter_latest(svg):
+
+    # load avatar
+    avatar = pygame.image.load("/home/mike/avatar.jpg")
+    IMG = load_svg_string(svg)
+    screen.blit(background, (0, 0))
+    screen.blit(IMG,(0,0))
+    screen.blit(avatar,(10,10))
+    #screen.blit(avatarImage,(300,10))
+
+    pygame.display.flip()
+    pygame.time.delay(2000)
+    #text_file = open(os.path.join("/home/mike/twitter_screen.svg"), "w")
+    #text_file.write(update_node)
+    #text_file.close()
+    pass
+
 def preen_screen(photoshoot, svg_data, preentime=10):
     ShootTime = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     SHOOTDIRECTORY = os.path.join(SHOOTPHOTOSTORE, ShootTime)
@@ -272,7 +289,13 @@ def debug_print_configuration(config, photoshoot):
 if __name__ == '__main__':
     #Set up configuration
     config = configuration.ConfigFile("boothsettings.json")
-    SocialMedia = SendTweet.selfie_Tweet()
+
+
+
+
+
+
+
 
     config.Load()
     debug_print_configuration(config, None)
@@ -295,9 +318,19 @@ if __name__ == '__main__':
     SCREEN_ATTRACT = open('Screens/Attract.svg').read()
     SCREEN_PREEN = open('Screens/Instructions2.svg').read()
     SCREEN_ERROR = open('Screens/Error.svg').read()
+    SCREEN_TWITTER = open('Screens/Tweet.svg').read()
     ERROR_FONT = config.ErrorFont
     ERROR_FONT_SIZE = config.ErrorFontSize
     ERROR_FONT_COLOUR = config.ErrorFontColour
+
+    ACCESS_TOKEN = config.ACCESS_TOKEN
+    ACCESS_SECRET = config.ACCESS_SECRET
+    CONSUMER_KEY = config.CONSUMER_KEY
+    CONSUMER_SECRET = config.CONSUMER_SECRET
+
+    SocialMedia = SendTweet.selfie_Tweet(CONSUMER_KEY, CONSUMER_SECRET,ACCESS_TOKEN,ACCESS_SECRET)
+
+
 
     CamerObject = importlib.import_module("libselfietorium.USBCamera")
 
@@ -320,7 +353,6 @@ if __name__ == '__main__':
     cbackground = cbackground.convert()
     cbackground.fill((200, 255, 255))
 
-    SocialMedia.tweet('Starting Selfietorium...')
 
     c = pygame.time.Clock()
     while True:
@@ -335,6 +367,8 @@ if __name__ == '__main__':
                             state = "PREEN"
                     elif event.key == pygame.K_s:
                         CAMERASOUND.play()
+                    elif event.key == pygame.K_t:
+                        twitter_latest(SCREEN_TWITTER)
                     elif event.key == pygame.K_e:
                         #ErrorScreen(SCREEN_ERROR)
                         raise ValueError('A very specific bad thing happened')
