@@ -20,7 +20,8 @@ import traceback
 
 # Constants
 WIDTH = 640                     # Width of the window
-HEIGHT = 480                    # Height of the window
+HEIGHT = 540                    # Height of the window
+DPI = 90                        # Recalculate this based on your screen.
 SHOOTDIRECTORY = None           # Name of directory to store photographs taken
 PHOTOSOUNDEFFECT = None         # Sound effect to play when taking photo
 SCREEN_ATTRACT = None           # Attract Screen SVG XML data
@@ -82,8 +83,10 @@ def load_svg(filename):
 
 
 def convert_surface_to_image(surface):
+    width = surface.get_width() # 640
+    height = surface.get_height() # 480
     pil = pygame.image.tostring(surface, "RGBA", False)
-    img = PIL.Image.frombytes("RGBA", (640, 480), pil)
+    img = PIL.Image.frombytes("RGBA", (width, height), pil)
     return img
 
 
@@ -96,6 +99,7 @@ def savephoto(mydir, img_photo, filename):
             raise     # This was not a "directory exist" error..
     img_photo = convert_surface_to_image(img_photo)
     img_photo.save(os.path.join(mydir, filename), format="PNG")
+
 
 
 def layout(tplate, photos, outputdir):
@@ -131,19 +135,90 @@ def save_svg_to_img(svg, outputdir, filename):
 
 def twitter_latest(svg):
 
+    svg =open('Screens/Tweet.svg').read()
+    svg_loaded = rsvg.Handle(data=svg)
+    img_w, img_h = svg_loaded.props.width, svg_loaded.props.height
+    scale_factorx = float(WIDTH) / float(img_w)
+    scale_factory = float(HEIGHT) / float(img_h)
+
+    import json
+    latest_tweet = SocialMedia.search()
+    the_dict = json.loads(str(latest_tweet[0]))
+    print "Screen Name : "+the_dict['user']['name']
+    print "Handle      : "+the_dict['user']['screen_name']
+    print "Avatar URL  : "+the_dict['user']['profile_image_url']
+    print "Tweet Text  : "+the_dict['text']
+
     # load avatar
-    avatar = pygame.image.load("/home/mike/avatar.jpg")
+    import io
+    from HTMLParser import HTMLParser
+    h = HTMLParser()
+    from urllib2 import urlopen
+    image_str = urlopen(the_dict['user']['profile_image_url']).read()
+    image_file = io.BytesIO(image_str)
+    avatar = pygame.image.load(image_file)
+    #avatar = pygame.image.load("/home/mike/avatar.jpg")
+    result = convert_surface_to_image(avatar)
+
+    output = StringIO.StringIO()
+    result.save(output, format="PNG")
+    contents = output.getvalue()
+    output.close()
+    base64data = base64.b64encode(contents)
+    str_b64 = "data:image/png;base64," + base64data
+
+    #Update Avatar
+    svg = template.updateNodeAttrib(svg, "twitter_avatar",
+            "{http://www.w3.org/1999/xlink}href", str_b64)
+
+    #Update Twitter name
+    svg = template.updateNode(svg, 'twitter_name',the_dict['user']['name'])
+
+    #Update Twitter handle
+    svg = template.updateNode(svg, 'twitter_handle','@'+the_dict['user']['screen_name'])
+
+    #Update Twitter handle
+    #svg = template.updateNode(svg, 'twitter_tweet',the_dict['text'])
+    #update Tweet
+    screenGeometry = template.findGeometry(svg)
+    scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
+    scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
+    prompt = template.findNode(svg, '//svg:rect[@id="twitter_tweet_region"]')
+    promptFont = template.findNode(svg, '//svg:text[@id="twitter_tweet_region_font"]')
+    s = promptFont.attrib['style']
+    s = s.rstrip(';')
+    styles = dict(item.split(":") for item in s.split(";"))
+    SCREEN_FONT = styles["font-family"]
+    SCREEN_FONT_SIZE = int(''.join(c for c in styles["font-size"] if c.isdigit()))
+    print str(SCREEN_FONT_SIZE)
+    print str(scale_factorx)
+    print str(scale_factory)
+    SCREEN_FONT_SIZE = int(round((float(SCREEN_FONT_SIZE)) * float(scale_factorx)))
+    #points = (pixels / 150) * 72
+
+
+    SCREEN_FONT_COLOUR = styles["fill"][1:]
+    SCREEN_FONT_COLOUR  = template.colour_convert_hex_to_tuple(SCREEN_FONT_COLOUR)
+    svg = template.deleteNode(svg, '//svg:rect[@id="twitter_tweet_region"]')
+    promptx = int(math.floor(float(prompt.attrib['x']) * scaleWidth))
+    prompty = int(math.floor(float(prompt.attrib['y']) * scaleHeight))
+    promptWidth = int(math.ceil(float(prompt.attrib['width']) * scaleWidth))
+    promptHeight = int(math.ceil(float(prompt.attrib['height']) * scaleHeight))
+    twitter_rect = pygame.Rect((promptx, prompty, promptWidth, promptHeight))
+    my_font = pygame.font.SysFont(SCREEN_FONT, SCREEN_FONT_SIZE)
+    prompt = pygameTextRectangle.render_textrect(h.unescape(the_dict['text']), my_font, twitter_rect, SCREEN_FONT_COLOUR, (0, 0, 0, 0), 0)
+
     IMG = load_svg_string(svg)
     screen.blit(background, (0, 0))
-    screen.blit(IMG,(0,0))
-    screen.blit(avatar,(10,10))
-    #screen.blit(avatarImage,(300,10))
+    screen.blit(IMG, (0, 0))
+    screen.blit(prompt, (promptx, prompty))
+
 
     pygame.display.flip()
-    pygame.time.delay(2000)
-    #text_file = open(os.path.join("/home/mike/twitter_screen.svg"), "w")
-    #text_file.write(update_node)
-    #text_file.close()
+    pygame.time.delay(10000)
+#    text_file = open(os.path.join("/home/mike/wayne.b64"), "w")
+#    text_file.write(base64data)
+#    text_file.close()
     pass
 
 def preen_screen(photoshoot, svg_data, preentime=10):
@@ -159,8 +234,8 @@ def preen_screen(photoshoot, svg_data, preentime=10):
     picamy = int(math.floor(float(picam.attrib['y']) * scaleHeight))
 
     prompt = template.findNode(svg_data, '//svg:rect[@id="prompt"]')
-    svg_data = template.deleteNode(svg_data, '//svg:rect[@id="prompt"]')
 
+    svg_data = template.deleteNode(svg_data, '//svg:rect[@id="prompt"]')
     svg_data = template.deleteNode(svg_data, '//svg:text[@id="promptfont"]')
 
     promptx = int(math.floor(float(prompt.attrib['x']) * scaleWidth))
@@ -288,16 +363,13 @@ def debug_print_configuration(config, photoshoot):
 
 if __name__ == '__main__':
     #Set up configuration
+    print "WIDTH " + str(WIDTH)
     config = configuration.ConfigFile("boothsettings.json")
-
-
-
-
-
-
-
-
+    print "WIDTH " + str(WIDTH)
+    print "CP1"
     config.Load()
+    print "WIDTH " + str(WIDTH)
+
     debug_print_configuration(config, None)
     #Set up variables
     SHOOTPHOTOSTORE = config.photostore
@@ -319,6 +391,7 @@ if __name__ == '__main__':
     SCREEN_PREEN = open('Screens/Instructions2.svg').read()
     SCREEN_ERROR = open('Screens/Error.svg').read()
     SCREEN_TWITTER = open('Screens/Tweet.svg').read()
+
     ERROR_FONT = config.ErrorFont
     ERROR_FONT_SIZE = config.ErrorFontSize
     ERROR_FONT_COLOUR = config.ErrorFontColour
@@ -335,15 +408,17 @@ if __name__ == '__main__':
     CamerObject = importlib.import_module("libselfietorium.USBCamera")
 
     mymethod = getattr(importlib.import_module("libselfietorium.USBCamera"), "USBCamera")()
-
+    #45 dpi
 
     state = "ATTRACT"
     pygame.init()
     pygame.mixer.init(48000, -16, 1, 1024)
     CAMERASOUND = pygame.mixer.Sound(PHOTOSOUNDEFFECT)
-
+    print "WIDTH " + str(WIDTH)
+    print "HEIGHT " + str(HEIGHT)
+    print(pygame.display.Info())
     #pygame.display.set_mode((WIDTH,HEIGHT),0,16)
-    screen = pygame.display.set_mode((640, 480))
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.mouse.set_visible(False)
     background = pygame.Surface((WIDTH, HEIGHT))
     background = background.convert()

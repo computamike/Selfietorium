@@ -12,7 +12,7 @@ X-Python3-Version: >= 3.2
 
 Package: python-selfietorium
 Architecture: all
-Depends: ${python:Depends},python-rsvg, python-twitter, ${misc:Depends}
+Depends: ${python:Depends},python-rsvg, python-tweepy, ${misc:Depends}
 Suggests: python-selfietorium-doc, cups-pdf
 Description: <insert up to 60 chars description> (Python 2)
  <insert long description, indented with spaces>

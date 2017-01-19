@@ -47,6 +47,11 @@ def updateNode(svg_data, element_id, value):
     return xmlstr
 
 
+def colour_convert_hex_to_tuple(sstring):
+    h1, h2, h3 = '0x' + sstring[0:2], '0x' + sstring[2:4], '0x' + sstring[4:6]
+    r, g, b = int(h1, 16), int(h2, 16), int(h3, 16)
+    return (r, g, b)
+
 def updateNodeAttrib(svg_data, element_id, attrib, value):
     """
     Finds a Node based on ID, and sets its value.
