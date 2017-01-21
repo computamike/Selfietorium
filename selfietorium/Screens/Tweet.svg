@@ -24,14 +24,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.5"
-     inkscape:cx="311.32115"
-     inkscape:cy="562.44852"
+     inkscape:cx="-115.67885"
+     inkscape:cy="402.44852"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1375"
-     inkscape:window-height="876"
-     inkscape:window-x="1431"
+     inkscape:window-width="1301"
+     inkscape:window-height="744"
+     inkscape:window-x="65"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
      inkscape:snap-to-guides="false" />
@@ -131,7 +131,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -144,12 +144,7 @@
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="flowRoot5435"
        xml:space="preserve"><flowRegion
-         id="flowRegion5437"><rect
-           y="1037.5736"
-           x="287.55676"
-           height="122.56518"
-           width="209.77501"
-           id="rect5439" /></flowRegion><flowPara
+         id="flowRegion5437" /><flowPara
          id="flowPara5441" /></flowRoot>    <rect
        y="2.4893844"
        x="2.4893754"
