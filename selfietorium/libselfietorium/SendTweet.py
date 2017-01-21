@@ -21,22 +21,33 @@ from threading import Thread
 
 class selfie_Tweet(tweepy.StreamListener):
 
-    def __init__(self, consumer_key, consumer_secret, access_token, access_token_secret):
+    def __init__(self, consumer_key, consumer_secret, access_token, access_token_secret, hashtag):
         self.verified = False
+        self.latesttweet = None
         self.auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         self.auth.set_access_token(access_token, access_token_secret)
         self.api = tweepy.API(self.auth)
         if (self.api.verify_credentials()!=False):
             self.verified = True
+            self.background_thread = Thread(target=self.startListening(hashtag))
+            self.background_thread.start()
 
-    def on_data(self, data):
+    @property
+    def latest_Tweet(self):
+        return self.latesttweet
+
+    def on_status(self, data):
+        self.latesttweet = data
+        #print "STATUS RECIEVED : " + data.text +"\n"
+        #for thing in dir(data):
+        #    print ":" + thing + "\n"
+    #def on_data(self, data):
         # Twitter returns data in JSON format - we need to decode it first
         #decoded = json.loads(data)
-
+     #   self.latesttweet = data
         # Also, we convert UTF-8 to ASCII ignoring all bad characters sent by users
-        print data
         #print '@%s: %s' % (decoded['user']['screen_name'], decoded['text'].encode('ascii', 'ignore'))
-        print ''
+
         return True
     def on_error(self, status):
         print status
@@ -54,23 +65,29 @@ class selfie_Tweet(tweepy.StreamListener):
     def tweetPhoto(self, status, media):
         self.api.PostMedia(status,media)
 
-    def startListening(self):
+    def startListening(self, hashtag):
         self.stream = tweepy.Stream(self.auth,self)
+        if (hashtag):
+            self.stream.filter(track=[hashtag])
         self.stream.userstream()
 
 
-# This is how you post a simple status update - like..Selfietorium booting up..
-#api.PostUpdate('This is an eagle.')
-#api.PostMedia('This is an Eagle','../Photo1.jpg')
 if __name__ == '__main__':
-    # Add sample Code here
-    c = selfie_Tweet('jEI4POVjkHU9IUzwdVRJjAfin','4e2hbGM4LwE8k8AxUmY9JUR5E3nazJUgxwOusycJXXL1PjvlCW','709132628339859456-fArUMiQGqurO5hRkqvBWPeHyOaeKXAU','R4L9WiAdcRhj848QBGLuGwtMCInos9n0axawPsInn0rSS')
-    c.startListening();
+    import time
+    c = selfie_Tweet('jEI4POVjkHU9IUzwdVRJjAfin','4e2hbGM4LwE8k8AxUmY9JUR5E3nazJUgxwOusycJXXL1PjvlCW','709132628339859456-fArUMiQGqurO5hRkqvBWPeHyOaeKXAU','R4L9WiAdcRhj848QBGLuGwtMCInos9n0axawPsInn0rSS','#selfietorium_test')
+    print "Starting Polling the Twitter Layer..."
+    #c.startListening();
     var = 1
     while var == 1 :  # This constructs an infinite loop
+        if (c.latest_Tweet != None):
+            print (time.strftime("%H:%M:%S") + c.latest_Tweet.text +"\n")
+            if 'media' in c.latest_Tweet.entities:
+                for image in  c.latest_Tweet.entities['media']:
+                    print("Photo found @ : " + image['media_url'])
+                    #(do smthing with image['media_url'])
+            time.sleep(10)
 
-        num = raw_input("Enter a number  :")
-    print "You entered: ", num
+    print "PROGRAM TERMINATED: "
     #res = c.search()
     #print res
     #dir(res)
