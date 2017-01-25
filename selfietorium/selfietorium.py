@@ -11,7 +11,7 @@ from libselfietorium import template
 from libselfietorium import configuration
 from libselfietorium import pygameTextRectangle
 from libselfietorium import SendTweet
-
+from libselfietorium import utilities
 import datetime
 import base64
 import StringIO
@@ -132,94 +132,98 @@ def save_svg_to_img(svg, outputdir, filename):
     pygame.time.delay(5000)
     savephoto(outputdir, IMG, filename)
 
-
-def twitter_latest(svg):
-
-    svg =open('Screens/Tweet.svg').read()
-    svg_loaded = rsvg.Handle(data=svg)
-    img_w, img_h = svg_loaded.props.width, svg_loaded.props.height
-    scale_factorx = float(WIDTH) / float(img_w)
-    scale_factory = float(HEIGHT) / float(img_h)
-
-    import json
-    latest_tweet = SocialMedia.search()
-    the_dict = json.loads(str(latest_tweet[0]))
-    print "Screen Name : "+the_dict['user']['name']
-    print "Handle      : "+the_dict['user']['screen_name']
-    print "Avatar URL  : "+the_dict['user']['profile_image_url']
-    print "Tweet Text  : "+the_dict['text']
-
-    # load avatar
-    import io
-    from HTMLParser import HTMLParser
-    h = HTMLParser()
+def load_image_from_url_as_B64(source):
     from urllib2 import urlopen
-    image_str = urlopen(the_dict['user']['profile_image_url']).read()
+    import io
+    image_str = urlopen(source).read()
     image_file = io.BytesIO(image_str)
     avatar = pygame.image.load(image_file)
-    #avatar = pygame.image.load("/home/mike/avatar.jpg")
     result = convert_surface_to_image(avatar)
-
     output = StringIO.StringIO()
     result.save(output, format="PNG")
     contents = output.getvalue()
     output.close()
     base64data = base64.b64encode(contents)
     str_b64 = "data:image/png;base64," + base64data
+    return str_b64
 
-    #Update Avatar
-    svg = template.updateNodeAttrib(svg, "twitter_avatar",
+def twitter_latest(svg, imagesvg):
+    svg_loaded = rsvg.Handle(data=svg)
+    img_w, img_h = svg_loaded.props.width, svg_loaded.props.height
+    scale_factorx = float(WIDTH) / float(img_w)
+    scale_factory = float(HEIGHT) / float(img_h)
+    latest_tweet = SocialMedia.latest_Tweet
+
+    if latest_tweet != None:
+        print "Screen Name : "+latest_tweet.user.name
+        print "Handle      : "+latest_tweet.user.screen_name
+        print "Avatar URL  : "+latest_tweet.user.profile_image_url
+        print "Tweet Text  : "+latest_tweet.text
+        # load avatar
+        from HTMLParser import HTMLParser
+        h = HTMLParser()
+        str_b64 = load_image_from_url_as_B64(latest_tweet.user.profile_image_url)
+        #Update Avatar
+        svg = template.updateNodeAttrib(svg, "twitter_avatar",
             "{http://www.w3.org/1999/xlink}href", str_b64)
+        #Update Twitter name
+        svg = template.updateNode(svg, 'twitter_name',latest_tweet.user.name)
+        #Update Twitter handle
+        svg = template.updateNode(svg, 'twitter_handle','@'+latest_tweet.user.screen_name)
+        #Update Twitter handle
+        #svg = template.updateNode(svg, 'twitter_tweet',the_dict['text'])
+        #update Tweet
+        screenGeometry = template.findGeometry(svg)
+        scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
+        scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
+        prompt = template.findNode(svg, '//svg:rect[@id="twitter_tweet_region"]')
+        promptFont = template.findNode(svg, '//svg:text[@id="twitter_tweet_region_font"]')
 
-    #Update Twitter name
-    svg = template.updateNode(svg, 'twitter_name',the_dict['user']['name'])
+        # what does this do?
 
-    #Update Twitter handle
-    svg = template.updateNode(svg, 'twitter_handle','@'+the_dict['user']['screen_name'])
+        #s = promptFont.attrib['style']
+        #s = s.rstrip(';')
+        #styles = dict(item.split(":") for item in s.split(";"))
+        #SCREEN_FONT = styles["font-family"]
+        styles = template.get_Element_Styles(promptFont)
+        SCREEN_FONT = styles["font-family"]
+        SCREEN_FONT_SIZE = int(''.join(c for c in styles["font-size"] if c.isdigit()))
 
-    #Update Twitter handle
-    #svg = template.updateNode(svg, 'twitter_tweet',the_dict['text'])
-    #update Tweet
-    screenGeometry = template.findGeometry(svg)
-    scaleWidth = float(float(WIDTH) / float(screenGeometry[0]))
-    scaleHeight = float(float(HEIGHT) / float(screenGeometry[1]))
-    prompt = template.findNode(svg, '//svg:rect[@id="twitter_tweet_region"]')
-    promptFont = template.findNode(svg, '//svg:text[@id="twitter_tweet_region_font"]')
-    s = promptFont.attrib['style']
-    s = s.rstrip(';')
-    styles = dict(item.split(":") for item in s.split(";"))
-    SCREEN_FONT = styles["font-family"]
-    SCREEN_FONT_SIZE = int(''.join(c for c in styles["font-size"] if c.isdigit()))
-    print str(SCREEN_FONT_SIZE)
-    print str(scale_factorx)
-    print str(scale_factory)
-    SCREEN_FONT_SIZE = int(round((float(SCREEN_FONT_SIZE)) * float(scale_factorx)))
-    #points = (pixels / 150) * 72
+        print str(SCREEN_FONT_SIZE)
+        print str(scale_factorx)
+        print str(scale_factory)
+        SCREEN_FONT_SIZE = int(round((float(SCREEN_FONT_SIZE)) * float(scale_factorx)))
+        #points = (pixels / 150) * 72
+        SCREEN_FONT_COLOUR = styles["fill"][1:]
+        SCREEN_FONT_COLOUR  = util.hex_to_rgb(SCREEN_FONT_COLOUR)
+        svg = template.deleteNode(svg, '//svg:rect[@id="twitter_tweet_region"]')
+        promptx = int(math.floor(float(prompt.attrib['x']) * scaleWidth))
+        prompty = int(math.floor(float(prompt.attrib['y']) * scaleHeight))
+        promptWidth = int(math.ceil(float(prompt.attrib['width']) * scaleWidth))
+        promptHeight = int(math.ceil(float(prompt.attrib['height']) * scaleHeight))
+        twitter_rect = pygame.Rect((promptx, prompty, promptWidth, promptHeight))
+        my_font = pygame.font.SysFont(SCREEN_FONT, SCREEN_FONT_SIZE)
+        prompt = pygameTextRectangle.render_textrect(h.unescape(latest_tweet.text), my_font, twitter_rect, SCREEN_FONT_COLOUR, (0, 0, 0, 0), 0)
+        IMG = load_svg_string(svg)
+        screen.blit(background, (0, 0))
+        screen.blit(IMG, (0, 0))
+        screen.blit(prompt, (promptx, prompty))
+        pygame.display.flip()
+        pygame.time.delay(5000)
 
+        if 'media' in latest_tweet.entities:
+            for image in latest_tweet.entities['media']:
+                print 'Photo found @ : ' + image['media_url']
+                imagesvg = template.updateNodeAttrib(imagesvg, "twitter_avatar","{http://www.w3.org/1999/xlink}href", str_b64)
+                imagesvg = template.updateNode(imagesvg, 'twitter_name',latest_tweet.user.name)
 
-    SCREEN_FONT_COLOUR = styles["fill"][1:]
-    SCREEN_FONT_COLOUR  = template.colour_convert_hex_to_tuple(SCREEN_FONT_COLOUR)
-    svg = template.deleteNode(svg, '//svg:rect[@id="twitter_tweet_region"]')
-    promptx = int(math.floor(float(prompt.attrib['x']) * scaleWidth))
-    prompty = int(math.floor(float(prompt.attrib['y']) * scaleHeight))
-    promptWidth = int(math.ceil(float(prompt.attrib['width']) * scaleWidth))
-    promptHeight = int(math.ceil(float(prompt.attrib['height']) * scaleHeight))
-    twitter_rect = pygame.Rect((promptx, prompty, promptWidth, promptHeight))
-    my_font = pygame.font.SysFont(SCREEN_FONT, SCREEN_FONT_SIZE)
-    prompt = pygameTextRectangle.render_textrect(h.unescape(the_dict['text']), my_font, twitter_rect, SCREEN_FONT_COLOUR, (0, 0, 0, 0), 0)
+                photo_b64 = load_image_from_url_as_B64(image['media_url'])
+                imagesvg = template.updateNodeAttrib(imagesvg, "twitter_photo","{http://www.w3.org/1999/xlink}href", photo_b64)
+                IMG = load_svg_string(imagesvg)
+                screen.blit(IMG, (0, 0))
+                pygame.display.flip()
+                pygame.time.delay(5000)
 
-    IMG = load_svg_string(svg)
-    screen.blit(background, (0, 0))
-    screen.blit(IMG, (0, 0))
-    screen.blit(prompt, (promptx, prompty))
-
-
-    pygame.display.flip()
-    pygame.time.delay(10000)
-#    text_file = open(os.path.join("/home/mike/wayne.b64"), "w")
-#    text_file.write(base64data)
-#    text_file.close()
-    pass
 
 def preen_screen(photoshoot, svg_data, preentime=10):
     ShootTime = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -357,9 +361,11 @@ def debug_print_configuration(config, photoshoot):
     print("Update Font Size: " + str(config.Size))
     print("Update Font Colour: " + str(config.FontColour))
     print("Printer Name     :" + str(config.PrinterName))
-    print()
-    print()
+    print("Twitter Screen Name:" + str(config.TweetAuthor))
+    print("Twitter Hashtag     :" + str(config.TweetHashTag))
 
+    print()
+    print()
 
 if __name__ == '__main__':
     #Set up configuration
@@ -391,7 +397,7 @@ if __name__ == '__main__':
     SCREEN_PREEN = open('Screens/Instructions2.svg').read()
     SCREEN_ERROR = open('Screens/Error.svg').read()
     SCREEN_TWITTER = open('Screens/Tweet.svg').read()
-
+    SCREEN_TWITTER_IMAGE =open('Screens/TweetImage.svg').read()
     ERROR_FONT = config.ErrorFont
     ERROR_FONT_SIZE = config.ErrorFontSize
     ERROR_FONT_COLOUR = config.ErrorFontColour
@@ -400,15 +406,21 @@ if __name__ == '__main__':
     ACCESS_SECRET = config.ACCESS_SECRET
     CONSUMER_KEY = config.CONSUMER_KEY
     CONSUMER_SECRET = config.CONSUMER_SECRET
+    TWITTERAUTHOR = config.TweetAuthor
+    HASHTAG = config.TweetHashTag
 
-    SocialMedia = SendTweet.selfie_Tweet(CONSUMER_KEY, CONSUMER_SECRET,ACCESS_TOKEN,ACCESS_SECRET)
+    util = utilities.utilities()
 
-
+    SocialMedia = SendTweet.selfie_Tweet(
+        CONSUMER_KEY,
+        CONSUMER_SECRET,
+        ACCESS_TOKEN,
+        ACCESS_SECRET,
+        HASHTAG,
+        TWITTERAUTHOR)
 
     CamerObject = importlib.import_module("libselfietorium.USBCamera")
-
     mymethod = getattr(importlib.import_module("libselfietorium.USBCamera"), "USBCamera")()
-    #45 dpi
 
     state = "ATTRACT"
     pygame.init()
@@ -443,7 +455,7 @@ if __name__ == '__main__':
                     elif event.key == pygame.K_s:
                         CAMERASOUND.play()
                     elif event.key == pygame.K_t:
-                        twitter_latest(SCREEN_TWITTER)
+                        twitter_latest(SCREEN_TWITTER,SCREEN_TWITTER_IMAGE)
                     elif event.key == pygame.K_e:
                         #ErrorScreen(SCREEN_ERROR)
                         raise ValueError('A very specific bad thing happened')

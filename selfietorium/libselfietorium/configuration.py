@@ -34,7 +34,7 @@ class ConfigFile:
         self.photosTaken = 0
         self.sheetspercartidge = 0
         self.shutterSound = "62491__benboncan__dslr-click.wav"
-        self.FontColour = [0, 0, 0]
+        self.ErrorFontColour = [0, 0, 0]
         self.ErrorFont = "MyUnderwood"
         self.ErrorFontSize = 20
         self.TweetPhrase = "I just took this photo... #selfietorium_test"
@@ -42,8 +42,11 @@ class ConfigFile:
         self.ACCESS_TOKEN = "<REPLACE THIS WITH YOUR ACCESS TOKEN>"
         self.ACCESS_SECRET = "<REPLACE THIS WITH YOUR ACCESS TOKEN SECRET>"
         self.CONSUMER_KEY = "<REPLACE THIS WITH YOUR API KEY>"
-        self.CONSUMER_SECRET = "<REPLCE THIS WITHN YOUR API SECRE>"
-        
+        self.CONSUMER_SECRET = "<REPLCE THIS WITH YOUR API SECRET>"
+        self.TweetAuthor =  "<REPLACE THIS WITH THE SCREEN NAME OF THE ACCOUNT SELFIETORIUM TWEETS AS>"
+        self.TweetHashTag =  "<REPLACE THIS WITH THE HASHTAG FOR TWEETS>"
+
+
     def Load(self):
         with open(self.inifile, mode='r') as f:
             entry = json.load(f)
@@ -66,6 +69,8 @@ class ConfigFile:
             self.ACCESS_SECRET = entry['ACCESS_SECRET']
             self.CONSUMER_KEY = entry['CONSUMER_KEY']
             self.CONSUMER_SECRET = entry['CONSUMER_SECRET']
+            self.TweetAuthor = entry["TweetAuthor"]
+            self.TweetHashTag = entry["TweetHashTag"]
             return entry
 
     def Save(self):
@@ -90,14 +95,15 @@ class ConfigFile:
         configuration['ACCESS_SECRET'] = self.ACCESS_SECRET
         configuration['CONSUMER_KEY'] = self.CONSUMER_KEY
         configuration['CONSUMER_SECRET'] = self.CONSUMER_SECRET
-        
+        configuration['TweetAuthor'] = self.TweetAuthor
+        configuration['TweetHashTag'] = self.TweetHashTag
         print self.inifile
         with open(self.inifile, mode='w') as f:
             json.dump(configuration, f, indent=2)
 
 
 if __name__ == '__main__':
-    c = ConfigFile("boothsettings.json")
+    c = ConfigFile("boothsettings.test.json")
 
     c.Save()
     config = c.Load()

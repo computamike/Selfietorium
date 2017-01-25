@@ -21,6 +21,8 @@
     0
   ],
   "TweetPhrase": "I just took this photo... #selfietorium_test",
+  "TweetAuthor": "@selfietorium", 
+  "TweetHashTag": "#selfietorium_test", 
   "PrinterName": "PDF",
   "ACCESS_TOKEN": "<REPLACE THIS WITH YOUR ACCESS TOKEN>",
   "ACCESS_SECRET": "<REPLACE THIS WITH YOUR ACCESS TOKEN SECRET>",

@@ -47,14 +47,9 @@ def updateNode(svg_data, element_id, value):
     return xmlstr
 
 
-def colour_convert_hex_to_tuple(sstring):
-    h1, h2, h3 = '0x' + sstring[0:2], '0x' + sstring[2:4], '0x' + sstring[4:6]
-    r, g, b = int(h1, 16), int(h2, 16), int(h3, 16)
-    return (r, g, b)
-
 def updateNodeAttrib(svg_data, element_id, attrib, value):
     """
-    Finds a Node based on ID, and sets its value.
+    Finds a Text Node based on ID, and sets its value.
     Args:
         svg_data : String containing template data
         element_id       : id of element to find
@@ -162,6 +157,12 @@ def LoadPhotoShoot(templateFile):
         x.photo = None
         simpleList.append(x)
     return sorted(simpleList, key=lambda x: x.imageID, reverse=False)
+
+def get_Element_Styles(element):
+    s = element.attrib['style']
+    s = s.rstrip(';')
+    styles = dict(item.split(":") for item in s.split(";"))
+    return styles
 
 if __name__ == '__main__':
     # Add sample Code here
