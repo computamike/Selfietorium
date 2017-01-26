@@ -15,7 +15,7 @@ class selfie_Tweet(tweepy.StreamListener):
         hashtag,
         author
         ):
-        self.IsTest = False
+        self.IsTest = True
         self.verified = False
         self.latesttweet = None
         self.auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -23,7 +23,7 @@ class selfie_Tweet(tweepy.StreamListener):
         self.api = tweepy.API(self.auth)
         self.author = author.lstrip('@')
         self.hashtag = hashtag.lstrip('#')
-        if self.api.verify_credentials() is not False and self.IsTest is not True:
+        if self.IsTest is False and self.api.verify_credentials() is not False:
             self.verified = True
             self.stream = tweepy.Stream(auth=self.auth, listener=self)
             self.stream.userstream(async=True)
@@ -63,6 +63,7 @@ class selfie_Tweet(tweepy.StreamListener):
 
     def tweetPhoto(self, status, media):
         self.api.PostMedia(status, media)
+
 
     def on_status(self, data):
         print data

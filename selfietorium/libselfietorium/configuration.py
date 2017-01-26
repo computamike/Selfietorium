@@ -38,6 +38,8 @@ class ConfigFile:
         self.ErrorFont = "MyUnderwood"
         self.ErrorFontSize = 20
         self.TweetPhrase = "I just took this photo... #selfietorium_test"
+        self.CameraModule = "libselfietorium.USBCamera"
+        self.CameraFile = "USBCamera"
         self.PrinterName = "PDF"
         self.ACCESS_TOKEN = "<REPLACE THIS WITH YOUR ACCESS TOKEN>"
         self.ACCESS_SECRET = "<REPLACE THIS WITH YOUR ACCESS TOKEN SECRET>"
@@ -64,6 +66,8 @@ class ConfigFile:
             self.ErrorFont = entry['ErrorFont']
             self.ErrorFontSize = entry['ErrorFontSize']
             self.TweetPhrase = entry['TweetPhrase']
+            self.CameraModule = entry['CameraModule']
+            self.CameraFile = entry['CameraFile']
             self.PrinterName = entry['PrinterName']
             self.ACCESS_TOKEN = entry['ACCESS_TOKEN']
             self.ACCESS_SECRET = entry['ACCESS_SECRET']
@@ -90,6 +94,8 @@ class ConfigFile:
         configuration['ErrorFont'] = self.ErrorFont
         configuration['ErrorFontSize'] = self.ErrorFontSize
         configuration['TweetPhrase'] = self.TweetPhrase
+        configuration['CameraModule'] = self.CameraModule
+        configuration['CameraFile'] = self.CameraFile
         configuration['PrinterName'] = self.PrinterName
         configuration['ACCESS_TOKEN'] = self.ACCESS_TOKEN
         configuration['ACCESS_SECRET'] = self.ACCESS_SECRET
