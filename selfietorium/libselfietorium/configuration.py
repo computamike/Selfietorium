@@ -17,9 +17,11 @@ Example:
 """
 import json
 
+
 class ConfigFile:
-    """A Configuration object - this object serialises / deserialises data to JSON format."""
-    def __init__(self,iniFile):
+    """A Configuration object - this object serialises / deserialises data to
+    JSON format."""
+    def __init__(self, iniFile):
         """Constructor for this object."""
         self.inifile = iniFile
         self.layout = '../6x4.Template1.-.Linked.Files.svg'
@@ -28,42 +30,61 @@ class ConfigFile:
         self.preenTime = 5
         self.Font = "MyUnderwood"
         self.Size = 30
-        self.FontColour = [125,125,125]
+        self.FontColour = [125, 125, 125]
         self.photosTaken = 0
         self.sheetspercartidge = 0
         self.shutterSound = "62491__benboncan__dslr-click.wav"
-        self.FontColour = [0,0,0]
+        self.ErrorFontColour = [0, 0, 0]
         self.ErrorFont = "MyUnderwood"
         self.ErrorFontSize = 20
         self.TweetPhrase = "I just took this photo... #selfietorium_test"
+        self.CameraModule = "libselfietorium.USBCamera"
+        self.CameraFile = "USBCamera"
+        self.PrinterName = "PDF"
+        self.ACCESS_TOKEN = "<REPLACE THIS WITH YOUR ACCESS TOKEN>"
+        self.ACCESS_SECRET = "<REPLACE THIS WITH YOUR ACCESS TOKEN SECRET>"
+        self.CONSUMER_KEY = "<REPLACE THIS WITH YOUR API KEY>"
+        self.CONSUMER_SECRET = "<REPLCE THIS WITH YOUR API SECRET>"
+        self.TweetAuthor =  "<REPLACE THIS WITH THE SCREEN NAME OF THE ACCOUNT SELFIETORIUM TWEETS AS>"
+        self.TweetHashTag =  "<REPLACE THIS WITH THE HASHTAG FOR TWEETS>"
+
 
     def Load(self):
         with open(self.inifile, mode='r') as f:
             entry = json.load(f)
             self.layout = entry['layout']
             self.prePhotoPhrase = entry['prePhotoPhrase']
-            self.photostore =entry['PhotoStore']
+            self.photostore = entry['PhotoStore']
             self.preenTime = entry['preenTime']
             self.photosTaken = entry['photosTaken']
             self.sheetspercartidge = entry['sheetspercartidge']
             self.shutterSound = entry['shutterSound']
-            self.Font =  entry['Font']
-            self.Size =  entry['Size']
-            self.FontColour =  entry['FontColour']
-            self.ErrorFontColour =  entry['ErrorFontColour']
-            self.ErrorFont =  entry['ErrorFont']
-            self.ErrorFontSize =  entry['ErrorFontSize']
+            self.Font = entry['Font']
+            self.Size = entry['Size']
+            self.FontColour = entry['FontColour']
+            self.ErrorFontColour = entry['ErrorFontColour']
+            self.ErrorFont = entry['ErrorFont']
+            self.ErrorFontSize = entry['ErrorFontSize']
             self.TweetPhrase = entry['TweetPhrase']
+            self.CameraModule = entry['CameraModule']
+            self.CameraFile = entry['CameraFile']
+            self.PrinterName = entry['PrinterName']
+            self.ACCESS_TOKEN = entry['ACCESS_TOKEN']
+            self.ACCESS_SECRET = entry['ACCESS_SECRET']
+            self.CONSUMER_KEY = entry['CONSUMER_KEY']
+            self.CONSUMER_SECRET = entry['CONSUMER_SECRET']
+            self.TweetAuthor = entry["TweetAuthor"]
+            self.TweetHashTag = entry["TweetHashTag"]
             return entry
 
     def Save(self):
         """Save data to config file."""
-        configuration={}
+        configuration = {}
         configuration['layout'] = self.layout
-        configuration['prePhotoPhrase']=self.prePhotoPhrase
-        configuration['PhotoStore']=self.photostore
-        configuration['preenTime']=self.preenTime
-        configuration['photosTaken']=self.photosTaken
+        configuration['prePhotoPhrase'] = self.prePhotoPhrase
+        configuration['PhotoStore'] = self.photostore
+        configuration['preenTime'] = self.preenTime
+        configuration['photosTaken'] = self.photosTaken
         configuration['sheetspercartidge'] = self.sheetspercartidge
         configuration['shutterSound'] = self.shutterSound
         configuration['FontColour'] = self.FontColour
@@ -73,15 +94,22 @@ class ConfigFile:
         configuration['ErrorFont'] = self.ErrorFont
         configuration['ErrorFontSize'] = self.ErrorFontSize
         configuration['TweetPhrase'] = self.TweetPhrase
-        
-
+        configuration['CameraModule'] = self.CameraModule
+        configuration['CameraFile'] = self.CameraFile
+        configuration['PrinterName'] = self.PrinterName
+        configuration['ACCESS_TOKEN'] = self.ACCESS_TOKEN
+        configuration['ACCESS_SECRET'] = self.ACCESS_SECRET
+        configuration['CONSUMER_KEY'] = self.CONSUMER_KEY
+        configuration['CONSUMER_SECRET'] = self.CONSUMER_SECRET
+        configuration['TweetAuthor'] = self.TweetAuthor
+        configuration['TweetHashTag'] = self.TweetHashTag
         print self.inifile
         with open(self.inifile, mode='w') as f:
-            json.dump(configuration,f, indent=2)
+            json.dump(configuration, f, indent=2)
 
 
 if __name__ == '__main__':
-    c = ConfigFile("boothsettings.json")
+    c = ConfigFile("boothsettings.test.json")
 
     c.Save()
     config = c.Load()

@@ -6,11 +6,11 @@ Tempaltes for selfietorium are stored as SVG graphic files.
 This library provides functionality for reading and updating templates.
 """
 from lxml import etree as ET
-from lxml.etree import QName
+
 
 class PhotoShoot(object):
     """Class that describes a photoshoot."""
-    pass
+
     def __str__(self):
         return '|' + str(self.imageID) + '|' + str(self.title)  +'|' + str(self.photo)  +'|'
 
@@ -19,55 +19,54 @@ class PhotoShoot(object):
 # CONSTANTS
 #
 ns = {
-    'dc'    : 'http://purl.org/dc/elements/1.1/',
-    'cc'    : 'http://creativecommons.org/ns#',
-    'rdf'   : 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-    'svg'   : 'http://www.w3.org/2000/svg',
-    'xlink' : 'http://www.w3.org/1999/xlink',
-    'sodipodi':'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
-    'inkscape' : 'http://www.inkscape.org/namespaces/inkscape'
+          'dc': 'http://purl.org/dc/elements/1.1/',
+          'cc': 'http://creativecommons.org/ns#',
+         'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+         'svg': 'http://www.w3.org/2000/svg',
+       'xlink': 'http://www.w3.org/1999/xlink',
+    'sodipodi': 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
+    'inkscape': 'http://www.inkscape.org/namespaces/inkscape'
     }
 """Namespaces used by SVG files (created by Inkscape)."""
 
 
-def updateNode(svg_data,id,value):
+def updateNode(svg_data, element_id, value):
     """
     Finds a Text Node based on ID, and sets its value.
     Args:
         svg_data : String containing template data
-        id       : id of element to find
+        element_id : id of element to find
         value    : value to assign.
     returns :
         Updated SVG string data.
     """
     tree = ET.fromstring(svg_data)
-    NodeToUpdate = tree.xpath('/svg:svg/svg:g/svg:text[@id=\''+ id + '\']/svg:tspan',namespaces=ns)
+    NodeToUpdate = tree.xpath('/svg:svg/svg:g/svg:text[@id=\'' + element_id + '\']/svg:tspan', namespaces=ns)
     NodeToUpdate[0].text = value
     xmlstr = ET.tostring(tree)
     return xmlstr
 
-def updateNodeAttrib(svg_data,id,attrib,value):
+
+def updateNodeAttrib(svg_data, element_id, attrib, value):
     """
     Finds a Text Node based on ID, and sets its value.
     Args:
         svg_data : String containing template data
-        id       : id of element to find
+        element_id       : id of element to find
         value    : value to assign.
     returns :
         Updated SVG string data.
     """
-
-
     tree = ET.fromstring(svg_data)
-    NodeToUpdate = tree.xpath('//*[@id=\''+id+'\']',namespaces=ns)
+    NodeToUpdate = tree.xpath('//*[@id=\'' + element_id + '\']', namespaces=ns)
     #//*[@id='38']
-    NodeToUpdate[0].set(attrib,value)
+    NodeToUpdate[0].set(attrib, value)
 
     #xmlstr = ET.tostring(tree)
     return ET.tostring(tree)
 
 
-def findNode(svg_data,xpath):
+def findNode(svg_data, xpath):
     """
     Finds a node based on an Xpath.
     Args:
@@ -77,12 +76,13 @@ def findNode(svg_data,xpath):
         XmlElement of required node, or None if node does not exist.
     """
     tree = ET.fromstring(svg_data)
-    NodeToUpdate = tree.xpath(xpath,namespaces=ns)
-    if len(NodeToUpdate) >0:
+    NodeToUpdate = tree.xpath(xpath, namespaces=ns)
+    if len(NodeToUpdate) > 0:
         return NodeToUpdate[0]
     return None
 
-def deleteNode(svg_data,xpath):
+
+def deleteNode(svg_data, xpath):
     """
     Deletes a node based on an Xpath.
     Args:
@@ -92,11 +92,10 @@ def deleteNode(svg_data,xpath):
         svg data cleansed of the offending node.
     """
     tree = ET.fromstring(svg_data)
-    NodeToUpdate = tree.xpath(xpath,namespaces=ns)
-    if len(NodeToUpdate) >0:
+    NodeToUpdate = tree.xpath(xpath, namespaces=ns)
+    if len(NodeToUpdate) > 0:
         NodeToUpdate[0].getparent().remove(NodeToUpdate[0])
     return  ET.tostring(tree)
-
 
 
 def findGeometry(svg_data):
@@ -106,7 +105,7 @@ def findGeometry(svg_data):
         svg_data : String containing template data.
     """
     tree = ET.fromstring(svg_data)
-    return (tree.attrib["width"],tree.attrib["height"])
+    return (tree.attrib["width"], tree.attrib["height"])
 
 
 def LoadPhotoShoot(templateFile):
@@ -139,13 +138,13 @@ def LoadPhotoShoot(templateFile):
     order.
     """
     tree = ET.parse(templateFile)
-    root = tree.getroot()
+    #root = tree.getroot()
     # First - lets set up some SVG namespaces
-    p = tree.xpath('/svg:svg/svg:g/svg:image',namespaces=ns)
+    p = tree.xpath('/svg:svg/svg:g/svg:image', namespaces=ns)
     simpleList = []
     for child in p:
-        Image = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']',namespaces=ns)
-        title = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']/svg:title',namespaces=ns)
+        #Image = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']',namespaces=ns)
+        title = tree.xpath('/svg:svg/svg:g/svg:image[@id=\'' + child.attrib['id'] + '\']/svg:title', namespaces=ns)
         x = PhotoShoot()
         x.imageID = child.attrib['id']
         print x.imageID
@@ -153,11 +152,17 @@ def LoadPhotoShoot(templateFile):
         print title == None
         print title == []
         x.title = ""
-        if (title != [] ):
+        if (title != []):
             x.title = title[0].text or ""
-        x.photo=None
+        x.photo = None
         simpleList.append(x)
     return sorted(simpleList, key=lambda x: x.imageID, reverse=False)
+
+def get_Element_Styles(element):
+    s = element.attrib['style']
+    s = s.rstrip(';')
+    styles = dict(item.split(":") for item in s.split(";"))
+    return styles
 
 if __name__ == '__main__':
     # Add sample Code here

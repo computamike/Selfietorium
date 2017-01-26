@@ -22,7 +22,7 @@ before_install:
 install: true
  
 script:
-   - sonar-scanner
+#   - sonar-scanner
    - sudo dpkg-buildpackage -us -uc 
 
 before_deploy:

@@ -9,6 +9,8 @@
   ],
   "sheetspercartidge": 0,
   "photosTaken": 0,
+  "CameraModule": "libselfietorium.USBCamera", 
+  "CameraFile": "USBCamera", 
   "preenTime": 5,
   "Font": "CF Anarchy",
   "PhotoStore": "Photos/",
@@ -16,9 +18,16 @@
   "ErrorFontSize": 15,
   "ErrorFont": "My Underwood",
   "ErrorFontColour": [
-      0,
-      0,
-      0
-    ],
-  "TweetPhrase" :  "I just took this photo... #selfietorium_test"
+    0,
+    0,
+    0
+  ],
+  "TweetPhrase": "I just took this photo... #selfietorium_test",
+  "TweetAuthor": "@selfietorium", 
+  "TweetHashTag": "#selfietorium_test", 
+  "PrinterName": "PDF",
+  "ACCESS_TOKEN": "<REPLACE THIS WITH YOUR ACCESS TOKEN>",
+  "ACCESS_SECRET": "<REPLACE THIS WITH YOUR ACCESS TOKEN SECRET>",
+  "CONSUMER_KEY": "<REPLACE THIS WITH YOUR API KEY>",
+  "CONSUMER_SECRET": "<REPLCE THIS WITHN YOUR API SECRET>"
 }
