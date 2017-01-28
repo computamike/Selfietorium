@@ -11,9 +11,11 @@ therefore provides specific serialisation methods mentioned in:
 http://www.diveintopython3.net/serializing.html
 
 Example:
-    import configuration
-    cfile = ConfigFile("boothsettings.json")
-    c.Save()
+    To Save a configuration file (which will have default values)::
+
+     import configuration
+     cfile = ConfigFile("boothsettings.json")
+     c.Save()
 """
 import json
 
@@ -50,6 +52,7 @@ class ConfigFile:
 
 
     def Load(self):
+        """Load data from config file into object."""
         with open(self.inifile, mode='r') as f:
             entry = json.load(f)
             self.layout = entry['layout']

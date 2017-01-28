@@ -13,6 +13,12 @@ class USBCamera:
         self.cam.start()
 
     def GetPhoto(self):
+        """Return an image from the camera
+
+        Returns:
+            Image as a pygame surface
+
+        """
         img = self.cam.get_image()
         return img
 
