@@ -5,7 +5,7 @@ import tweepy
 
 
 class selfie_Tweet(tweepy.StreamListener):
-
+    """Class used to interact with Twitter."""
     def __init__(
         self,
         consumer_key,
@@ -32,6 +32,8 @@ class selfie_Tweet(tweepy.StreamListener):
 
     @property
     def Fake_Tweet(self):
+        """Method to create a fake tweet that can be used without needing to
+        authenticate to Twitter."""
         faketweet = tweepy.models.Status()
         faketweet.text = "This is a fake tweet"
         faketweet.user = tweepy.models.User()
@@ -51,22 +53,26 @@ class selfie_Tweet(tweepy.StreamListener):
 
     @property
     def latest_Tweet(self):
+        """Returns the latest tweet object recieved from the twitter user
+        stream."""
         if self.IsTest :
             return self.Fake_Tweet
         return self.latesttweet
 
     def tweet(self, status):
+        """Send a simple test based tweet."""
         if self.verified:
             self.api.PostUpdate(status)
         else:
             print 'posting to twitter ' + status
 
     def tweetPhoto(self, status, media):
+        """Sends a tweet which contains media (eg: a photograph)"""
         self.api.PostMedia(status, media)
 
 
     def on_status(self, data):
-        print data
+        """Method executed when a tweet is added to the user stream."""
         if (data.user.name == self.author):
             for x in data.entities.get('hashtags'):
                 if x["text"] == self.hashtag:
