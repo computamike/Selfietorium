@@ -90,12 +90,13 @@ def findNode(svg_data, xpath):
 
 def deleteNode(svg_data, xpath):
     """Deletes a node based on an Xpath.
+
     Args:
-        svg_data (str): String containing SVG template Data.
-        xpath (str): XPath of element to find.
+        svg_data: String containing template data
+        xpath : XPath of element to find
 
     Returns:
-        A string containing svg data cleansed of the offending node.
+        A string containing the svg data cleansed of the offending node.
     """
     tree = ET.fromstring(svg_data)
     NodeToUpdate = tree.xpath(xpath, namespaces=ns)
