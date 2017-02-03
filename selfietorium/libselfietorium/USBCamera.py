@@ -5,6 +5,7 @@ import pygame.camera
 
 class USBCamera:
     """A class for capturing images from a web camera"""
+
     def __init__(self):
         """Constructor for this object."""
         print("Starting USB Camera Object")
@@ -13,18 +14,16 @@ class USBCamera:
         self.cam.start()
 
     def GetPhoto(self):
-        """Return an image from the camera
+        """
+        Return an image from the camera
 
         Returns:
             Image as a pygame surface
-
         """
         img = self.cam.get_image()
         return img
 
 
-
 if __name__ == '__main__':
-
     # Add sample Code here
     pass

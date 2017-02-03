@@ -14,8 +14,8 @@ Package: python-selfietorium
 Architecture: all
 Depends: ${python:Depends},python-rsvg, python-tweepy, ${misc:Depends}
 Suggests: python-selfietorium-doc, cups-pdf, python-cups
-Description: <insert up to 60 chars description> (Python 2)
- <insert long description, indented with spaces>
+Description: Python developed photobooth (Python 2)
+ A photobooth written using python, mainlt aimed at the raspberry pi.
  .
  This package installs the library for Python 2.
 
@@ -28,11 +28,11 @@ Description: <insert up to 60 chars description> (Python 2)
 # .
 # This package installs the library for Python 3.
 #
-#Package: python-selfietorium-doc
-#Architecture: all
-#Section: doc
-#Depends: ${sphinxdoc:Depends}, ${misc:Depends}
-#Description: selfietorium documentation  (common documentation)
-# <insert long description, indented with spaces>
-# .
-# This is the common documentation package.
+Package: python-selfietorium-doc
+Architecture: all
+Section: doc
+Depends: ${sphinxdoc:Depends}, ${misc:Depends}
+Description: selfietorium documentation  (common documentation)
+ <insert long description, indented with spaces>
+ .
+ This is the common documentation package.

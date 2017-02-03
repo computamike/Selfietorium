@@ -21,9 +21,11 @@ import json
 from os.path import expanduser
 import os.path
 
+
 class ConfigFile:
     """A Configuration object - this object serialises / deserialises data to
     JSON format."""
+
     def __init__(self, iniFile):
         """Constructor for this object."""
         self.inifile = expanduser(iniFile)
@@ -48,11 +50,10 @@ class ConfigFile:
         self.ACCESS_SECRET = "<REPLACE THIS WITH YOUR ACCESS TOKEN SECRET>"
         self.CONSUMER_KEY = "<REPLACE THIS WITH YOUR API KEY>"
         self.CONSUMER_SECRET = "<REPLACE THIS WITH YOUR API SECRET>"
-        self.TweetAuthor =  "<REPLACE THIS WITH THE SCREEN NAME OF THE ACCOUNT SELFIETORIUM TWEETS AS>"
-        self.TweetHashTag =  "<REPLACE THIS WITH THE HASHTAG FOR TWEETS>"
-        if os.path.isfile(self.inifile ) == False:
+        self.TweetAuthor = "<REPLACE THIS WITH THE SCREEN NAME OF THE ACCOUNT SELFIETORIUM TWEETS AS>"
+        self.TweetHashTag = "<REPLACE THIS WITH THE HASHTAG FOR TWEETS>"
+        if os.path.isfile(self.inifile) is False:
             self.Save()
-
 
     def Load(self):
         """Load data from config file into object."""

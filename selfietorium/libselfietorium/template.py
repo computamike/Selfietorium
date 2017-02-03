@@ -12,21 +12,21 @@ class PhotoShoot(object):
     """Class that describes a photoshoot."""
 
     def __str__(self):
-        return '|' + str(self.imageID) + '|' + str(self.title)  +'|' + str(self.photo)  +'|'
+        return '|' + str(self.imageID) + '|' + str(self.title) + '|' + str(self.photo) + '|'
 
 
 #
 # CONSTANTS
 #
 ns = {
-          'dc': 'http://purl.org/dc/elements/1.1/',
-          'cc': 'http://creativecommons.org/ns#',
-         'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-         'svg': 'http://www.w3.org/2000/svg',
-       'xlink': 'http://www.w3.org/1999/xlink',
+    'dc': 'http://purl.org/dc/elements/1.1/',
+    'cc': 'http://creativecommons.org/ns#',
+    'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+    'svg': 'http://www.w3.org/2000/svg',
+    'xlink': 'http://www.w3.org/1999/xlink',
     'sodipodi': 'http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd',
     'inkscape': 'http://www.inkscape.org/namespaces/inkscape'
-    }
+}
 """Namespaces used by SVG files (created by Inkscape)."""
 
 
@@ -63,10 +63,10 @@ def updateNodeAttrib(svg_data, element_id, attrib, value):
     """
     tree = ET.fromstring(svg_data)
     NodeToUpdate = tree.xpath('//*[@id=\'' + element_id + '\']', namespaces=ns)
-    #//*[@id='38']
+    # //*[@id='38']
     NodeToUpdate[0].set(attrib, value)
 
-    #xmlstr = ET.tostring(tree)
+    # xmlstr = ET.tostring(tree)
     return ET.tostring(tree)
 
 
@@ -102,7 +102,7 @@ def deleteNode(svg_data, xpath):
     NodeToUpdate = tree.xpath(xpath, namespaces=ns)
     if len(NodeToUpdate) > 0:
         NodeToUpdate[0].getparent().remove(NodeToUpdate[0])
-    return  ET.tostring(tree)
+    return ET.tostring(tree)
 
 
 def findGeometry(svg_data):
@@ -156,18 +156,18 @@ renamed - however the order of these ID's will determine the shoot
 order.
     """
     tree = ET.parse(templateFile)
-    #root = tree.getroot()
+    # root = tree.getroot()
     # First - lets set up some SVG namespaces
     p = tree.xpath('/svg:svg/svg:g/svg:image', namespaces=ns)
     simpleList = []
     for child in p:
-        #Image = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']',namespaces=ns)
+        # Image = tree.xpath('/svg:svg/svg:g/svg:image[@id=\''+ child.attrib['id'] + '\']',namespaces=ns)
         title = tree.xpath('/svg:svg/svg:g/svg:image[@id=\'' + child.attrib['id'] + '\']/svg:title', namespaces=ns)
         x = PhotoShoot()
         x.imageID = child.attrib['id']
         print x.imageID
         print title
-        print title == None
+        print title is None
         print title == []
         x.title = ""
         if (title != []):
@@ -175,6 +175,7 @@ order.
         x.photo = None
         simpleList.append(x)
     return sorted(simpleList, key=lambda x: x.imageID, reverse=False)
+
 
 def get_Element_Styles(element):
     """Retrieves the style attributes for an element
@@ -190,6 +191,7 @@ def get_Element_Styles(element):
     s = s.rstrip(';')
     styles = dict(item.split(":") for item in s.split(";"))
     return styles
+
 
 if __name__ == '__main__':
     # Add sample Code here

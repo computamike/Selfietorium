@@ -6,15 +6,16 @@ import tweepy
 
 class selfie_Tweet(tweepy.StreamListener):
     """Class used to interact with Twitter."""
+
     def __init__(
-        self,
-        consumer_key,
-        consumer_secret,
-        access_token,
-        access_token_secret,
-        hashtag,
-        author
-        ):
+            self,
+            consumer_key,
+            consumer_secret,
+            access_token,
+            access_token_secret,
+            hashtag,
+            author
+    ):
         self.IsTest = True
         self.verified = False
         self.latesttweet = None
@@ -38,24 +39,24 @@ class selfie_Tweet(tweepy.StreamListener):
         faketweet.text = "This is a fake tweet"
         faketweet.user = tweepy.models.User()
         faketweet.user.screen_name = "selfietorium"
-        faketweet.entities=        {
+        faketweet.entities = {
             'hashtags': [{u'indices': [18, 36], u'text': u'selfietorium_test'}],
             'urls': [],
-            'media'   :[
-                {'type':'photo', 'media_url':'https://pbs.twimg.com/media/C1RspMjXEAAQwKJ.png'},
-                {'type':'photo', 'media_url':'https://pbs.twimg.com/media/C2zEuKpWEAAj5Pg.jpg'},
-                {'type':'photo', 'media_url':'https://pbs.twimg.com/media/C2tpKy7XcAMlcco.jpg'}]
-         }
+            'media': [
+                {'type': 'photo', 'media_url': 'https://pbs.twimg.com/media/C1RspMjXEAAQwKJ.png'},
+                {'type': 'photo', 'media_url': 'https://pbs.twimg.com/media/C2zEuKpWEAAj5Pg.jpg'},
+                {'type': 'photo', 'media_url': 'https://pbs.twimg.com/media/C2tpKy7XcAMlcco.jpg'}]
+        }
 
         faketweet.user.name = "selfietorium"
-        faketweet.user.profile_image_url ='https://pbs.twimg.com/profile_images/709148441981616128/X4ZMu4ax_bigger.jpg'
+        faketweet.user.profile_image_url = 'https://pbs.twimg.com/profile_images/709148441981616128/X4ZMu4ax_bigger.jpg'
         return faketweet
 
     @property
     def latest_Tweet(self):
         """Returns the latest tweet object recieved from the twitter user
         stream."""
-        if self.IsTest :
+        if self.IsTest:
             return self.Fake_Tweet
         return self.latesttweet
 
@@ -69,7 +70,6 @@ class selfie_Tweet(tweepy.StreamListener):
     def tweetPhoto(self, status, media):
         """Sends a tweet which contains media (eg: a photograph)"""
         self.api.PostMedia(status, media)
-
 
     def on_status(self, data):
         """Method executed when a tweet is added to the user stream."""

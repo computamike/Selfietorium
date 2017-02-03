@@ -1,5 +1,4 @@
-!/bin/sh
-# postinst script for selfietorium
-xdg-open https://github.com/TitaniumBunker/Selfietorium/wiki/Congratulations
+# postinst script for selfietorium 
+xdg-open https://github.com/TitaniumBunker/Selfietorium/wiki/Congratulations &
 exit 0
 

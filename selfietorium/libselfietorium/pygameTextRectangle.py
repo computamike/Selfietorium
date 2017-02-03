@@ -1,14 +1,16 @@
 #!/usr/bin/python
 
 class TextRectException:
-    def __init__(self, message = None):
+    def __init__(self, message=None):
         self.message = message
+
     def __str__(self):
         return self.message
 
 
 def render_textrect(string, font, rect, text_color, background_color, justification=0):
-    r"""Returns a surface containing the passed text string, reformatted
+    """
+    Returns a surface containing the passed text string, reformatted
     to fit within the given rect, word-wrapping as necessary. The text
     will be anti-aliased.
 
@@ -16,20 +18,18 @@ def render_textrect(string, font, rect, text_color, background_color, justificat
         string: the text you wish to render - \\n begins a new line.
         font: Font object
         rect: A rectstyle giving the size of the surface requested.
-        text_color:a three-byte tuple of the rgb value of the text color.
-        :ex (0, 0, 10) = BLACK
-        justification: +-+------------------------+
-                       |0|(default) left-justified|
-                       +-+------------------------+
-                       |1|horizontally centered   |
-                       +-+------------------------+
-                       |2|right-justified         |
-                       +-+------------------------+
+        text_color:a three-byte tuple of the rgb value of the text color.\n
+            ex (0, 0, 0) = BLACK
+        justification: Value denoting the justification to use.\n
+            * 0 (default) left-justified\n
+            * 1 horizontally centered\n
+            * 2 right-justified\n
+
     Returns:
         A surface object with the text rendered onto it.
     Raises:
         1 Raises a TextRectException if the text won't fit onto the surface.
-"""
+    """
     import pygame
     final_lines = []
 
@@ -61,7 +61,7 @@ def render_textrect(string, font, rect, text_color, background_color, justificat
 
     # Let's try to write the text out on the surface.
 
-    surface = pygame.Surface(rect.size,pygame.SRCALPHA,32)
+    surface = pygame.Surface(rect.size, pygame.SRCALPHA, 32)
     surface.fill(background_color)
 
     accumulated_height = 0

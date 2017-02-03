@@ -5,6 +5,7 @@
 class utilities():
     """Utility functions used throughout selfietorium.  These functions may move
     to a more appropriate module later on."""
+
     def hex_to_rgb(self, value):
         """Convert a colour representation in the form of #RRGGBB to a python
         tuple.
@@ -30,6 +31,7 @@ class utilities():
             String representing the hexadecimal representation of the colour.
         """
         return '#%02x%02x%02x' % rgb
+
 
 if __name__ == '__main__':
     util = utilities()
