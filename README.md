@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/946cfa85bbb548b891d905816a142a83)](https://www.codacy.com/app/computamike/Selfietorium?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=TitaniumBunker/Selfietorium&amp;utm_campaign=Badge_Grade)
 
-[![Documentation Status](https://readthedocs.org/projects/selfietorium/badge/?version=latest)](http://selfietorium.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/selfietorium/badge/?version=master)](http://selfietorium.readthedocs.io/en/master/?badge=master)
 
 # Selfietorium
 A python based photo booth thing, being developed for a wedding November 2017 - will be running using raspberry pi
