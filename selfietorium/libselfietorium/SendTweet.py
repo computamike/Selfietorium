@@ -80,6 +80,10 @@ class selfie_Tweet(tweepy.StreamListener):
                     break
 
     def on_error(self, status):
+        """
+        Method called when an error is returned from Twitter.
+        :param status:
+        """
         print status
 
 

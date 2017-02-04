@@ -1,6 +1,11 @@
 #!/usr/bin/python
 
+
 class TextRectException:
+    """
+    Exception thrown if the text is too long to fit within the rectangle co-ordinates.
+    """
+
     def __init__(self, message=None):
         self.message = message
 
@@ -20,6 +25,8 @@ def render_textrect(string, font, rect, text_color, background_color, justificat
         rect: A rectstyle giving the size of the surface requested.
         text_color:a three-byte tuple of the rgb value of the text color.\n
             ex (0, 0, 0) = BLACK
+        background_color:a three-byte tuple of the rgb value of the text color.\n
+                    ex (255, 0, 0) = RED
         justification: Value denoting the justification to use.\n
             * 0 (default) left-justified\n
             * 1 horizontally centered\n

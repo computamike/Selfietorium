@@ -24,6 +24,11 @@ SIGNIN_URL = 'https://api.twitter.com/oauth/authenticate'
 
 
 def get_access_token(consumer_key, consumer_secret):
+    """
+    Get an access token from Twitter
+    :param consumer_key:
+    :param consumer_secret:
+    """
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret, callback_uri='oob')
 
     print('\nRequesting temp token from Twitter...\n')
@@ -67,6 +72,9 @@ def get_access_token(consumer_key, consumer_secret):
 
 
 def main():
+    """
+    This script allows a user to retrieve an set of Twitter API credentials.
+    """
     consumer_key = raw_input('Enter your consumer key: ')
     consumer_secret = raw_input('Enter your consumer secret: ')
     get_access_token(consumer_key, consumer_secret)

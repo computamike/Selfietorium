@@ -29,7 +29,7 @@ class Printer:
 
         Args:
             photo(string): Path to photo to print.
-            prrint_job_name(string): Name of print job
+            print_job_name(string): Name of print job
         """
         self.conn.printFile(self.printer_name, photo, print_job_name, {})
 

@@ -56,6 +56,7 @@ def updateNodeAttrib(svg_data, element_id, attrib, value):
     Args:
         svg_data: String containing template data
         element_id: id of element to find
+        attrib: attribute name to update
         value: value to assign.
 
     Returns:

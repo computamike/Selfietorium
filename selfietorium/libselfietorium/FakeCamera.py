@@ -15,6 +15,10 @@ class FakeCamera:
         self.cam2 = pygame.image.load("libselfietorium/eagle.jpg")
 
     def GetPhoto(self):
+        """
+        Return a photo from the camera
+        :return:
+        """
         return self.cam2
 
 
